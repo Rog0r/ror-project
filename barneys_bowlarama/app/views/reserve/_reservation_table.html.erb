@@ -1,0 +1,26 @@
+<table class="belegung">
+  <caption>Belegungsplan für den: <%= time.strftime("%d.%m") %></caption>
+  <tr>
+    <td >Zeit: </td>
+    <% alleys.each do |alley| %>
+      <%= content_tag :td, "Bahn #{alley.number}" %>
+    <% end %>
+  </tr>
+  <% time_iterator = office_hour.open_from %>
+  <% occupied = reservation_table.shift %>
+  <% j = ((office_hour.open_to - office_hour.open_from) / 1800).floor %>
+  <% j.times do |y| %>
+    <tr>
+      <%= content_tag :td, time_iterator.strftime("%H:%M") %>
+      <% time_iterator += 1800 %>
+      <% alleys.count.times do |x| %>
+        <% if occupied == [x + 1,y] %>
+          <%= content_tag :td, "", :class => "belegt" %>
+          <% occupied = reservation_table.shift %>
+        <% else %>
+          <%= content_tag :td, "" %>
+        <% end %>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @holiday.date.strftime("%d.%m.%y") %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @holiday.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_holiday_path(@holiday) %> |
+<%= link_to 'Back', holidays_path %>

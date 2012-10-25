@@ -1,0 +1,22 @@
+<h1>Listing office_hours</h1>
+
+<table>
+  <tr>
+    <th>Day</th>
+    <th>Open from</th>
+    <th>Open to</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @office_hours.each do |office_hour| %>
+  <tr>
+    <td><%= office_hour.day %></td>
+    <td><%= office_hour.open_from.strftime "%H:%M" %></td>
+    <td><%= office_hour.open_to.strftime "%H:%M" %></td>
+    <td><%= link_to 'Show', office_hour %></td>
+    <td><%= link_to 'Edit', edit_office_hour_path(office_hour) %></td>
+  </tr>
+<% end %>
+</table>

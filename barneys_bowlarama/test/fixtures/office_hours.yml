@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  day: 1
+  open_from: 2012-10-09 19:49:21
+  open_to: 2012-10-09 19:49:21
+
+two:
+  day: 1
+  open_from: 2012-10-09 19:49:21
+  open_to: 2012-10-09 19:49:21

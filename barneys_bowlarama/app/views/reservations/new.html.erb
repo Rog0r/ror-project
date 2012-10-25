@@ -1,0 +1,15 @@
+<h1>Bitte wählen Sie Tag und Zeitraum ihrer Reservierung!</h1>
+
+<%= render 'form' %>
+<%= render :partial => "reservation_table",:locals => {:time => @time, :alleys => @alleys, :office_hour => @office_hour, :reservation_table => @reservation_table } %>
+
+<%# link_to 'Back', reservations_path %>
+<%# debug @alleys%>
+<%# debug @office_hour %>
+<%# debug @holidays%>
+<%# debug @time%>
+<%# debug @reservations%>
+<%# debug @occupation_list %>
+<%# debug @reservation_table %>
+<%# debug @holiday_list%>
+<%# debug @reservation %>

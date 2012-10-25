@@ -1,0 +1,8 @@
+<h1>Editing reservation</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @reservation %> |
+<%= link_to 'Back', reservations_path %>
+
+<%= render :partial => "reservation_table",:locals => {:time => @time, :alleys => @alleys, :office_hour => @office_hour, :reservation_table => @reservation_table } %>

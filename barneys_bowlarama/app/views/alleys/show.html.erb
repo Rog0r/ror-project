@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Number:</b>
+  <%= @alley.number %>
+</p>
+
+<p>
+  <b>Unlocked:</b>
+  <%= @alley.unlocked %>
+</p>
+
+
+<%= link_to 'Edit', edit_alley_path(@alley) %> |
+<%= link_to 'Back', alleys_path %>

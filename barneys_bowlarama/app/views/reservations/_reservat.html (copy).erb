@@ -1,0 +1,35 @@
+<table class="belegung">
+  <caption>Für Sie passende Termine</caption>
+  <tr>
+    <td>Zeit: </td>
+    <% @alleys.each do |alley| %>
+      <td>Bahn <%= alley.number %></td>
+    <% end %>
+    <td></td>
+  </tr>
+  <% @reservations.each do |reservation| %>
+    <%= form_for(reservation) do |f| %>
+      <tr>
+        <td><%= "#{reservation.start_time.strftime("%H:%M")}-#{reservation.end_time.strftime("%H:%M")}" %></td>
+        <% index = 0 %>
+        <% alley = @alleys.slice index %>
+        <%= f.fields_for :alley_reservations do |ff| %>
+          <% while alley != nil && ff.object.alley_id != alley.id %>
+            <td>
+              <%= check_box_tag "", "Bahn#{ff.object.alley.number}", false, :disabled => true %>
+              <% index += 1 %>
+              <% alley = @alleys.slice index %>
+            </td>
+          <% end %>
+          <td>
+            <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1'  %>
+            <%= ff.hidden_field :alley_id %>
+          </td>
+          <% index += 1 %>
+          <% alley = @alleys.slice index %>
+        <% end %>
+        <td><%= f.submit "Reservieren" %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,25 @@
+<%= form_for(@alley) do |f| %>
+  <% if @alley.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@alley.errors.count, "error") %> prohibited this alley from being saved:</h2>
+
+      <ul>
+      <% @alley.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :number %><br />
+    <%= f.number_field :number %>
+  </div>
+  <div class="field">
+    <%= f.label :unlocked %><br />
+    <%= f.check_box :unlocked %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

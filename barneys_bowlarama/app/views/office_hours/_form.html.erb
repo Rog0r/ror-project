@@ -1,0 +1,25 @@
+<%= form_for(@office_hour) do |f| %>
+  <% if @office_hour.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@office_hour.errors.count, "error") %> prohibited this office_hour from being saved:</h2>
+
+      <ul>
+      <% @office_hour.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ <div class="field">
+    <%= f.label :open_from %><br />
+    <%= f.time_select :open_from, {:minute_step => 15 } %>
+  </div>
+  <div class="field">
+    <%= f.label :open_to %><br />
+    <%= f.time_select :open_to, {:minute_step => 15 } %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

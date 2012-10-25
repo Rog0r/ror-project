@@ -1,0 +1,52 @@
+<%= form_for(setup_reservation(@reservation)) do |f| %>
+  <% if @reservation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+      <ul>
+        <% @reservation.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div id="bahnen">
+    <%= f.fields_for :alley_reservations do |ff| %>
+      <% if @occupation_list.include?(ff.object.alley_id)  && !(ff.object.persisted?)%>
+        <%= content_tag :div, :class => "belegt" do -%>
+          <%= image_tag "bahn.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
+          <%= check_box_tag "", "Bahn#{ff.object.alley.number}", false, :disabled => true %>
+          <%= label_tag "", "Bahn #{ff.object.alley.number}:" %>
+        <% end -%>
+      <% else %>
+        <%= content_tag :div, :class => "frei" do -%> 
+          <%= image_tag "bahn.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
+          <%= ff.check_box :_destroy,
+            {:checked => ff.object.persisted?},
+            '0', '1'
+          %>
+        <%= ff.label :_destroy, "Bahn #{ff.object.alley.number}" %>
+        <%= ff.hidden_field :alley_id %>
+      <% end -%>
+    <% end %>
+  <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.date_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :start_time %><br />
+    <%= f.time_select :start_time, {:minute_step => 30} %>
+  </div>
+  <div class="field">
+    <%= f.label :end_time %><br />
+    <%= f.time_select :end_time, {:minute_step => 30} %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
