@@ -16,22 +16,17 @@
     <table class="belegung">
       <tr>
         <td><%= "#{reservation.start_time.strftime("%H:%M")}-#{reservation.end_time.strftime("%H:%M")}" %></td>
-        <% index = 0 %>
-        <% alley = @alleys.slice index %>
         <%= f.fields_for :alley_reservations do |ff| %>
-          <% while alley != nil && ff.object.alley_id != alley.id %>
+          <% if ff.object.occupied? %>
             <td>
-              <%= check_box_tag "", "Bahn#{ff.object.alley.number}", false, :disabled => true %>
-              <% index += 1 %>
-              <% alley = @alleys.slice index %>
+              <%= check_box_tag "", "occupied alley", false, :disabled => true %>
+            </td>
+          <% else %>
+            <td>
+              <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1'  %>
+              <%= ff.hidden_field :alley_id %>
             </td>
           <% end %>
-          <td>
-            <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1'  %>
-            <%= ff.hidden_field :alley_id %>
-          </td>
-          <% index += 1 %>
-          <% alley = @alleys.slice index %>
         <% end %>
         <td><%= f.submit "Reservieren" %></td>
       <% end %>

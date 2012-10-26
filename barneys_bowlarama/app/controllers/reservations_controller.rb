@@ -5,7 +5,7 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
-    @reservations = Reservation.all
+    @reservations = Reservation.includes(:alleys, :user).order(:date).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,7 +34,7 @@ class ReservationsController < ApplicationController
   # GET /reservations/1
   # GET /reservations/1.json
   def show
-    @reservation = Reservation.find(params[:id], :include => :alleys)
+    @reservation = Reservation.includes(:alleys, :user).find(params[:id])
     @reservation.alleys.sort_by! {|a| a.number }
 
     respond_to do |format|
@@ -239,6 +239,8 @@ class ReservationsController < ApplicationController
           @alleys.each do |alley|
             unless occupation_list.include? alley.number.to_i
               r.alley_reservations.build(:alley => alley)
+            else
+              r.alley_reservations.build(:alley => alley).set_occupied
             end
           end
           r.alley_reservations.sort_by! {|x| x.alley.id }

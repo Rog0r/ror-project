@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :role, :first_name, :last_name, :phone, :bonus_count
+  attr_accessible :email, :remember_me, :role, :first_name, :last_name, :phone, :bonus_count
 
-  validates :email, :password, :password_confirmation, :role, :first_name, :last_name, :phone, :presence => true
+  validates :email, :role, :first_name, :last_name, :phone, :presence => true
   validates :role, :inclusion => { :in => %w(guest user cashier admin),
                                    :message => "%{value} is not a valid role" }
   # attr_accessible :title, :body

@@ -23,7 +23,7 @@ class Reservation < ActiveRecord::Base
   def has_conflicts?
     self.alleys.each do |alley|
       alley.reservations.by_date(self.date).each do |reservation|
-        if reservation.in_conflict? self.start_time, self.end_time
+        if reservation.id != self.id && reservation.in_conflict?(self.start_time, self.end_time)
           errors[:base] << "Reservation is in conflict with another reservation"
           return
         end 
@@ -40,7 +40,7 @@ class Reservation < ActiveRecord::Base
 
   def in_conflict?(from, to = from + 1.hour)
     (start_time.strftime("%H%M") <= from.strftime("%H%M") \
-     && from.strftime("%H%M") <= end_time.strftime("%H%M")) \
+     && from.strftime("%H%M") < end_time.strftime("%H%M")) \
      || (start_time.strftime("%H%M") < to.strftime("%H%M") \
          && to.strftime("%H%M") <= end_time.strftime("%H%M")) 
   end
