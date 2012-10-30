@@ -46,18 +46,39 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   # GET /reservations/new.json
   def new
-    @alleys = Alley.all
-    @office_hour = OfficeHour.by_date Date.today
-    @time = next_valid_time
-    @reservations = Reservation.by_date(@time.to_date).includes(:alleys)
-    @occupation_list = create_occupation_list @reservations, @time
-    @reservation_table = create_reservation_table
-    @holidays = create_holiday_list
-    @reservation = create_reservation_dummy
+    if request.get?
+      @alleys = Alley.all
+      @office_hour = OfficeHour.by_date Date.today
+      @time = next_valid_time
+      @reservations = Reservation.by_date(@time.to_date).includes(:alleys)
+      @occupation_list = create_occupation_list @reservations, @time
+      @reservation_table = create_reservation_table @alleys, @reservations, @office_hour.open_from, @office_hour.open_to
+      @holidays = create_holiday_list
+      @reservation = create_reservation_dummy @alleys, @reservations, @time.to_date, @time, @time + 1.hour
+    else
+      if params[:select].has_key?(:date) && !(params[:select][:date].blank?)
+        @date = Date.parse params[:select][:date]
+      end
+      reservations = Reservation.by_date(@date).includes(:alleys)
+
+      if params[:select].has_key?(:current_date) && !(params[:select][:current_date].blank?)
+        current_date = Date.parse params[:select][:current_date]
+        if @date != current_date
+          @office_hour = OfficeHour.by_date @date
+          @reservation_table = create_reservation_table Alley.all, reservations, @office_hour.open_from, @office_hour.open_to
+        end
+      end
+
+      if params[:select].has_key?(:start_time) && !(params[:select][:start_time].blank?) && params[:select].has_key?(:end_time) && !(params[:select][:end_time].blank?)
+        alleys = Alley.all
+        @reservation = create_reservation_dummy alleys, reservations, @date, Time.parse(params[:select][:start_time]), Time.parse(params[:select][:end_time])
+      end
+    end
 
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @reservation }
+      format.js
     end
   end
 
@@ -167,13 +188,14 @@ class ReservationsController < ApplicationController
     tmp_array.sort
   end
 
-  def create_reservation_table
+  def create_reservation_table(alleys, reservations, open_from, open_to)
     tmp_array = []
-    @reservations.each do |reservation|
+
+    reservations.each do |reservation|
       reservation.alleys.each do |alley|
         tmp_time = reservation.start_time
         begin 
-          tmp_array << [alley.number, ((tmp_time - @office_hour.open_from) / 30.minute).floor]
+          tmp_array << [alley.number, ((tmp_time - open_from) / 30.minute).floor]
         end while (tmp_time += 30.minute) < reservation.end_time
       end
     end
@@ -186,6 +208,10 @@ class ReservationsController < ApplicationController
         tmp
       end
     end
+
+    tmp_array.unshift open_to
+    tmp_array.unshift open_from
+    tmp_array.unshift alleys.map {|alley| alley.number }
   end
 
   def create_holiday_list 
@@ -194,17 +220,18 @@ class ReservationsController < ApplicationController
     tmp_array.join(", ")
   end
 
-  def create_reservation_dummy
-    if @occupation_list.count == @alleys.count
-      nil
-    else 
-      @alleys.each do |alley|
-        if !((alley.id).in? @occupation_list) && alley.unlocked?
-          return Reservation.new :date => @time.to_date, :start_time => @time, :end_time => @time + 3600
-        end
+  def create_reservation_dummy(alleys, reservations, date, start_time, end_time)
+    occupation_list = create_occupation_list reservations, start_time, end_time
+    r = Reservation.new :date => date, :start_time => start_time, :end_time => end_time
+
+    alleys.each do |alley|
+      unless occupation_list.include? alley.number.to_i
+        r.alley_reservations.build(:alley => alley)
+      else
+        r.alley_reservations.build(:alley => alley).set_occupied
       end
-      nil
     end
+    return r
   end
 
   def find_possible_reservations(search)

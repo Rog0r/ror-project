@@ -1,0 +1,8 @@
+<% if @reservation_table %>
+  $("#reservation_table").html("<%= escape_javascript(render :partial => "reservation_table",:locals => { :date => @date, :reservation_table => @reservation_table } ) %>");
+  $("#current_date").val("<%= escape_javascript(@date.to_s); %>");
+  $('#zeit1').timepicker( 'option', {'minTime': '<%= escape_javascript(@office_hour.open_from.strftime "%I:%M%P") %>', 'maxTime': '<%= escape_javascript((@office_hour.open_to - 1.hour).strftime "%I:%M%P") %>' });
+  $('#zeit2').timepicker( 'option', {'minTime': '<%= escape_javascript(@office_hour.open_from.strftime "%I:%M%P") %>', 'maxTime': '<%= escape_javascript(@office_hour.open_to.strftime "%I:%M%P") %>' });
+<% end %>
+
+$("#reservation_form").html("<%= escape_javascript(render "new_form") %>");

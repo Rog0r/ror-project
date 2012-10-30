@@ -16,6 +16,7 @@ BarneysBowlarama::Application.routes.draw do
   end
 
   match 'reservations/search' => 'reservations#search', :via => :post
+  match 'reservations/new' => 'reservations#new', :via => :post
 
   resources :holidays
 

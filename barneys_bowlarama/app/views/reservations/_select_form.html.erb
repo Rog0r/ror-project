@@ -1,0 +1,8 @@
+<%= form_tag new_reservation_path, :remote => true do -%>
+  <p id="datumText1">Datum: <input type="text" id="datum1" /></p>
+  <p id="zeitText1">Von: <input id="zeit1" type="text" name="select[start_time]"/> </p>
+  <p id="zeitText2">bis: <input id="zeit2" disabled="disabled" type="text" name="select[end_time]" /> </p>
+  <input id="date_field" type="hidden" value="" name="select[date]"/>
+  <input id="current_date" type="hidden" value="<%= @reservation.date %>" name="select[current_date]"/>
+  <%= submit_tag 'Finden' %>
+<% end -%>

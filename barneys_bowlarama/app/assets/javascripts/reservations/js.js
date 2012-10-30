@@ -5,7 +5,7 @@ jQuery(function($){
     var dayss = $('#disableDays').val();
     var dA = dayss.split(", ");
 
-    var disabledDays = [dA[0] ];
+    var disabledDays = [dA[0]];
 
     for (var i=1; i<dA.length; i++ ) {
         disabledDays.push(dA[i]);
@@ -18,7 +18,7 @@ jQuery(function($){
     var timeMax = $('#maxPlayTime').val();
 
     var z2min = $("#openTime").val();
-    var z2max = $("#closeTime").val();
+    var z2max = $("#closeTime2").val();
 
 
     function disableAllTheseDays(date) {
@@ -61,31 +61,12 @@ jQuery(function($){
 
 
     $('#zeit1').timepicker({ 'timeFormat': 'H:i','minTime': z1min, 'maxTime': z1max});
+    $('#zeit2').timepicker({ 'timeFormat': 'H:i','minTime': z2min, 'maxTime': z2max});
     $('#zeit3').timepicker({ 'timeFormat': 'H:i','minTime': timeMin, 'maxTime': timeMax});
 
     $('#zeit1').change(function(){
 
         var z1 = $("#zeit1").val();
-
-      /*  if(z1.charAt(3)=="3") {
-            var z1Slice = "";
-            if(z1.charAt(0) == '0' ){
-                z1Slice = z1.slice(1,2);
-            }
-            else {
-                z1Slice = z1.slice(0,2);
-            }
-
-        var z1Zahl = parseInt(z1Slice); 
-        z1Zahl = z1Zahl + 1;
-        z1Slice = z1Zahl.toString();
-        z1 = z1Slice + ":00";
-
-        }
-        else {
-            z1 = z1.replace(':00', ':30');
-        } 
-        */
 
         var z1Minute =":00";
         if(z1.charAt(3)=="3") { 
@@ -103,16 +84,15 @@ jQuery(function($){
 
         z2min = z1Slice + z1Minute;
 
-        $('#zeit2').timepicker({ 'timeFormat': 'H:i','minTime': z2min, 'maxTime': z2max});
+        $('#zeit2').timepicker( 'option', 'minTime', z2min);
         $("#zeit2").removeAttr("disabled");
         $('#zeit2').val(z2min);
 
     });
 
     $("#zeit1").click(function() {
-        $('#zeit2').remove();
-        $('#zeitText2').append('<input id="zeit2" disabled="disabled" type="text" name="search[to]"/>');
         $('#zeit2').attr('disabled', 'disabled');
+	$('#zeit2').val('');
     });
 });
 
