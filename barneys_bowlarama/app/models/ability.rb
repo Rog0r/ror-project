@@ -30,6 +30,10 @@ class Ability
       can :manage, :all
     elsif user.role == "cashier"
       can :read, :all
+    elsif user.role == "user"
+      can :read, :all
+    else
+      can :manage, :all
     end
 
   end
