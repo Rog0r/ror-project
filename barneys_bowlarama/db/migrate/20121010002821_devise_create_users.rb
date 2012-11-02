@@ -55,8 +55,24 @@ class DeviseCreateUsers < ActiveRecord::Migration
     # add_index :users, :unlock_token,         :unique => true
     # add_index :users, :authentication_token, :unique => true
  
-    User.create(email: "admin1@bowlarama.com", password: "admin1", password_confirmation: "admin1", role: "admin", first_name: "Jan-Niklas", last_name: "Bartholomäus", phone: "123456")
-    User.create(email: "admin2@bowlarama.com", password: "admin2", password_confirmation: "admin2", role: "admin", first_name: "Alexander", last_name: "Brandt", phone: "1234567")
-    User.create(email: "cashier@bowlarama.com", password: "cashier", password_confirmation: "cashier", role: "cashier", first_name: "Susi", last_name: "Sorglos", phone: "12345678")
+    User.create do |u|
+      u.email = "admin1@bowlarama.com"
+      u.password = "admin1"
+      u.password_confirmation = "admin1"
+      u.role = "admin"
+      u.first_name = "Jan-Niklas"
+      u.last_name = "Bartholomäus"
+      u.phone = "123456"
+    end
+
+    User.create do |u|
+      u.email = "cashier@bowlarama.com"
+      u.password = "cashier"
+      u.password_confirmation = "cashier"
+      u.role = "cashier"
+      u.first_name = "Susi"
+      u.last_name = "Sorglos"
+      u.phone = "12345678"
+    end
   end
 end
