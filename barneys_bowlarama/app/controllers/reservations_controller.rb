@@ -200,7 +200,7 @@ class ReservationsController < ApplicationController
       end
     end
 
-    tmp_array.sort do |x,y|
+    tmp_array.sort! do |x,y|
       tmp = x[1] <=> y[1]
       if tmp == 0
         x[0] <=> y[0]

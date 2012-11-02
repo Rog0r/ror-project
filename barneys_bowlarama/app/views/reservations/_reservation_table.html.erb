@@ -12,11 +12,11 @@
     </tr>
     <% time_iterator = open_from %>
     <% occupied = reservation_table.shift %>
-    <% j = ((open_to - open_from) / 1800).to_i %>
+    <% j = ((open_to - open_from) / 30.minute).to_i %>
     <% j.times do |y| %>
       <tr>
         <%= content_tag :td, time_iterator.strftime("%H:%M") %>
-        <% time_iterator += 1800 %>
+        <% time_iterator += 30.minute %>
         <% alleys.count.times do |x| %>
           <% if occupied == [x + 1,y] %>
             <%= content_tag :td, "", :class => "belegt" %>
