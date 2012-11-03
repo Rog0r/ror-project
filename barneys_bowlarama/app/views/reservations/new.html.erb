@@ -11,7 +11,7 @@
 <%= render 'select_form' %>
 <%= render :partial => "reservation_table",:locals => {:date => @time, :reservation_table => @reservation_table } %>
 
-<%= render :partial => 'config', :locals => { :holiday_list => @holidays, :office_hour => @office_hour } %>
+<%= render :partial => 'select_config', :locals => { :holiday_list => @holidays, :office_hour => @office_hour, :reservation => @reservation } %>
 <%# link_to 'Back', reservations_path %>
 <%# debug @alleys%>
 <%# debug @office_hour %>

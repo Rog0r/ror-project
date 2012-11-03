@@ -14,6 +14,9 @@ jQuery(function($){
     var z1min = $("#openTime").val();
     var z1max = $("#closeTime").val();
 
+    var z1_init = $("#start_time").val();
+    var z2_init = $("#end_time").val();
+
     var timeMin = "01:00am";
     var timeMax = $('#maxPlayTime').val();
 
@@ -51,17 +54,21 @@ jQuery(function($){
         initStatus: 'Wähle ein Datum', isRTL: false};
     $.datepicker.setDefaults($.datepicker.regional['de']);
 
-    $( "#datum1").datepicker({minDate: new Date(y, m, d), beforeShowDay: disableAllTheseDays,onSelect: function(dateText, inst) { 
+    $( "#datum1").datepicker({minDate: new Date(z1_init * 1000), beforeShowDay: disableAllTheseDays,onSelect: function(dateText, inst) { 
       var dateAsString = dateText; //the first parameter of this function
       var dateAsObject = $(this).datepicker( 'getDate' ); //the getDate method
       $("#date_field").val(dateAsObject);
    }
 });
 
+    $("#datum1").datepicker('setDate', new Date(z1_init * 1000));
+
 
 
     $('#zeit1').timepicker({ 'timeFormat': 'H:i','minTime': z1min, 'maxTime': z1max});
+    $('#zeit1').timepicker('setTime', new Date(z1_init * 1000));
     $('#zeit2').timepicker({ 'timeFormat': 'H:i','minTime': z2min, 'maxTime': z2max});
+    $('#zeit2').timepicker('setTime', new Date(z2_init * 1000));
     $('#zeit3').timepicker({ 'timeFormat': 'H:i','minTime': timeMin, 'maxTime': timeMax});
 
     $('#zeit1').change(function(){
