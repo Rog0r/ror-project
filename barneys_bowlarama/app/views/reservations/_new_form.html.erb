@@ -21,7 +21,7 @@
         <% end -%>
       <% else %>
         <%= content_tag :div, :class => "frei" do -%>
-          <%= image_tag "bahn.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
+          <%= image_tag "bahn2.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
           <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1' %>
           <%= ff.label :_destroy, "Bahn #{ff.object.alley.number}" %>
           <%= ff.hidden_field :alley_id %>
@@ -35,6 +35,6 @@
   <%= f.hidden_field :end_time %>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Reservieren' %>
   </div>
 <% end %>

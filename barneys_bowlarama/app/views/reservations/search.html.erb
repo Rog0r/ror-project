@@ -2,7 +2,7 @@
   <%= javascript_include_tag "reservations/jquery.timepicker.js" %>
   <%= javascript_include_tag "reservations/jquery-ui-1.9.0.custom.js" %>
   <%= javascript_include_tag "reservations/jquery-ui-1.9.0.custom.min.js" %>
-  <%= javascript_include_tag "reservations/js.js" %>
+  <%= javascript_include_tag "reservations/search_form.js" %>
 <% end %>
 <div id="suchen">
 
@@ -12,4 +12,4 @@
   </div>
   </div>
 
-<%= render :partial => 'search_config', :locals => { :holiday_list => @holidays, :office_hour => @office_hour } %>
+<%= render :partial => 'search_config', :locals => { :holiday_list => @holidays, :office_hour => @office_hour, :time => @time } %>

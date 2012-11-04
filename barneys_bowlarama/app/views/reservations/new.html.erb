@@ -1,16 +1,19 @@
-<h1>Bitte wählen Sie Tag und Zeitraum ihrer Reservierung!</h1>
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "reservations/jquery.timepicker.js" %>
   <%= javascript_include_tag "reservations/jquery-ui-1.9.0.custom.js" %>
   <%= javascript_include_tag "reservations/jquery-ui-1.9.0.custom.min.js" %>
-  <%= javascript_include_tag "reservations/js.js" %>
+  <%= javascript_include_tag "reservations/select_form.js" %>
 <% end %>
+<div id="content">
+<h1>Bitte wählen Sie Tag und Zeitraum ihrer Reservierung!</h1>
 <div id="reservation_form">
   <%= render 'new_form' %>
 </div>
+<div id="select_form">
 <%= render 'select_form' %>
+</div>
 <%= render :partial => "reservation_table",:locals => {:date => @time, :reservation_table => @reservation_table } %>
-
+</div>
 <%= render :partial => 'select_config', :locals => { :holiday_list => @holidays, :office_hour => @office_hour, :reservation => @reservation } %>
 <%# link_to 'Back', reservations_path %>
 <%# debug @alleys%>

@@ -8,9 +8,9 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <div id="fenster">
-      <%= image_tag "logo.png" %> 
-      <p class="login"> 
+    <div id="container">
+      <%= image_tag "banner.png", :class => "centered" %> 
+      <div class="login"> 
       <% if user_signed_in? %>
         Singed in as <%= current_user.full_name %> |
         <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
@@ -18,8 +18,8 @@
       <% else %>
         <%= link_to "Sign up", new_user_registration_path%> | <%= link_to "Sign in", new_user_session_path %>
       <% end %>
-      </p>
-      <div class="menu">
+      </div>
+      <div id="menu">
         <%= link_to "Home", root_path %>
         | Termin:  
         <%= link_to "wählen", new_reservation_path %>

@@ -19,6 +19,7 @@ class ReservationsController < ApplicationController
     if request.get?
       @office_hour = OfficeHour.by_date Date.today
       @holidays = create_holiday_list
+      @time = next_valid_time
     else
       @alleys = Alley.all
       @reservations = find_possible_reservations params[:search]

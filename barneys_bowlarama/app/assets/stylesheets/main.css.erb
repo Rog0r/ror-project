@@ -4,26 +4,21 @@
 }
 
 html,body {
-    background-color: #f5c872;
+    background-color: #020302;
     height: 100%;
     width: 100%;
     overflow: auto;
-    padding: 0;
-    margin: 0;
     font-family: Verdana, Arial, sans-serif;
-    color: #000;
+    color: #e7f0ec;
     font-size: 1.0em;
     line-height: 1.2em;
-}  
+}
 
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: #3c80fd;
+body {
+    background-image: url(<%= asset_path 'background2.png' %>);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 50% 0;
 }
 
 h1 {
@@ -42,6 +37,11 @@ h4 {
     font-size: 120%;
 }
 
+img.centered {
+    margin: 0 auto;
+    display: block;	
+}
+
 a {
     text-decoration: none;
 }
@@ -52,7 +52,7 @@ a.visited,
 a:visited,
 a.active,
 a:active {
-    color: #3c80fd;
+    color: #82bde4;
 }
 
 ul {
@@ -62,6 +62,15 @@ ul {
 table {
    text-align: center
  }
+
+#container {
+    margin: 0 auto;
+    background-color: #020302;
+    width: 500px;
+    min-height: 669px;
+    position: relative;
+    left: 6px;
+}
 
 #fenster {
     margin: 10px auto;
@@ -80,11 +89,10 @@ table {
 }
 
 .login {
-    color: #3c80fd;
     font-size: 120%;
     font-style: italic;
     font-weight: bold;
-    float: right;
+    text-align: right;
     margin: 10px 8px;
 }
 
@@ -108,8 +116,8 @@ table {
 
 
 .frei {
-    border: solid green 2px;
-    background-color: green;
+    border: solid #fe192a 2px;
+    background-color: #fe192a;
 }
 
 .belegt {
@@ -177,7 +185,7 @@ table {
 
 .belegung tr td{
     margin: 2px 10px;
-    border: dotted black 1px;
+    border: dotted #e7f0ec 1px;
 }
 
 #bahnen #indexTermin {
@@ -198,5 +206,20 @@ table {
 
 #configs {
     visibility: hidden;
+}
+
+#menu {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#content {
+    padding: 10px;
+    position: relative;
+}
+	
+
+#select_form {
+    position: relative;
 }
 
