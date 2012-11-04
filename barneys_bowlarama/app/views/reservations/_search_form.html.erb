@@ -1,9 +1,9 @@
 <%= form_tag search_reservations_path, :remote => true do -%>
   <p id="datumText1">Datum: <input type="text" id="datum1" /></p>
   <p id="zeitText1">Zw.: <input id="zeit1" type="text" name="search[from]"/> </p>
-  <p id="zeitText2">und: <input id="zeit2" disabled="disabled" type="text" name="search[to]" /> </p>
+  <p id="zeitText2">und: <input id="zeit2" type="text" name="search[to]" /> </p>
   <p id="zeitText3">Dauer: <input id="zeit3" type="text" name="search[duration]"/> </p>
-  <input id="date_field" type="hidden" value="" name="search[date]"/>
+  <input id="date_field" type="hidden" value="<%= time.to_date %>" name="search[date]"/>
 
   <%= submit_tag 'Finden' %>
 <% end -%>

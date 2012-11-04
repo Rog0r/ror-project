@@ -6,7 +6,7 @@
 <% end %>
 <div id="suchen">
 
-  <%= render 'search_form' %>
+  <%= render :partial => 'search_form', :locals => { :time => @time } %>
 
   <div id="results">
   </div>

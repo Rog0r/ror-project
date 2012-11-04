@@ -3,7 +3,7 @@
 <% open_to = reservation_table.shift %>
 <div id="reservation_table">
   <table class="belegung">
-    <caption>Belegungsplan für den: <%= date.strftime("%d.%m") %></caption>
+    <caption>Datum: <%= date.strftime("%d.%m") %></caption>
     <tr>
       <td >Zeit: </td>
       <% alleys.each do |number| %>
