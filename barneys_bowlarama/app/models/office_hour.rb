@@ -17,7 +17,8 @@ class OfficeHour < ActiveRecord::Base
 
   def is_open?(from, to = from + 1.hour)
     open_from.strftime("%H%M") <= from.strftime("%H%M") \
-     && from.strftime("%H%M") <= open_to.strftime("%H%M") \
+     && from.strftime("%H%M") < open_to.strftime("%H%M") \
+     && open_from.strftime("%H%M") < to.strftime("%H%M") \
      && to.strftime("%H%M") <= open_to.strftime("%H%M")
   end
 
