@@ -9,42 +9,13 @@
   </head>
   <body>
     <div id="container">
-      <%= image_tag "banner.png", :class => "centered" %> 
-      <div class="login"> 
-      <% if user_signed_in? %>
-        Singed in as <%= current_user.full_name %> |
-        <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-        <% # link_to "delete account", user_registration_path(current_user), :method => :delete, :confirm => "Are you sure?" %>
-      <% else %>
-        <%= link_to "Sign up", new_user_registration_path%> | <%= link_to "Sign in", new_user_session_path %>
-      <% end %>
+      <%= image_tag "banner.png", :class => "centered" %>
+      <%= render "shared/login" %>
+      <%= render "shared/menu" %>
+      <div id="content">
+        <%= yield %>
       </div>
-      <div id="menu">
-        <%= link_to "Home", root_path %>
-        | Termin:  
-        <%= link_to "wählen", new_reservation_path %>
-        /
-        <%= link_to "suchen", search_reservations_path %>
-        <% if can? :index, Reservation %>
-          | <%= link_to "Reservations", reservations_path %>
-      <% end %>
-      <% if can? :index, Alley %>
-        | <%= link_to "Alleys", alleys_path %>
-    <% end %>
-    <% if can? :index, OfficeHour %>
-      | <%= link_to "Office Hours", office_hours_path %>
-  <% end %>
-  <% if can? :index, Holiday %>
-    | <%= link_to "Holidays", holidays_path %>
-<% end %>
-  </div>
+    </div>
 
-  <% flash.each do |name, msg| %>
-    <%= content_tag :p, msg, :id => "flash_#{name}" %>
-  <% end %>
-
-  <%= yield %>
-</div>
-
-</body>
+  </body>
 </html>

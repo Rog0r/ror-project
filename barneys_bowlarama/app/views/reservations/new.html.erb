@@ -4,8 +4,8 @@
   <%= javascript_include_tag "reservations/jquery-ui-1.9.0.custom.min.js" %>
   <%= javascript_include_tag "reservations/select_form.js" %>
 <% end %>
-<div id="content">
-<h1>Bahn(en) reservieren</h1>
+
+<h1>Online-Reservierung</h1>
 
 <h2>Tag und Zeitraum wählen!</h2>
 <div id="select_form">
@@ -19,7 +19,6 @@
 
 <h2>Belegungsplan</h2>
 <%= render :partial => "reservation_table",:locals => {:date => @time, :reservation_table => @reservation_table } %>
-</div>
 <%= render :partial => 'select_config', :locals => { :holiday_list => @holidays, :office_hour => @office_hour, :reservation => @reservation } %>
 <%# link_to 'Back', reservations_path %>
 <%# debug @alleys%>

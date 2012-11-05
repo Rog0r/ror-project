@@ -29,17 +29,17 @@
     <%= f.submit 'Reservieren' %>
   </div>
 
-  <div id="bahnen">
+  <div id="alleys">
     <%= f.fields_for :alley_reservations do |ff| %>
       <% if ff.object.occupied? %>
-        <%= content_tag :div, :class => "belegt" do -%>
-          <%= image_tag "bahn_occupied.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
+        <%= content_tag :div, :class => "occupied" do -%>
+          <%= image_tag "alley_occupied.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
           <%= check_box_tag "", "occupied alley", false, :disabled => true %>
           <%= label_tag "", "Bahn #{ff.object.alley.number}:" %>
         <% end -%>
       <% else %>
-        <%= content_tag :div, :class => "frei" do -%>
-          <%= image_tag "bahn2.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
+        <%= content_tag :div, :class => "free" do -%>
+          <%= image_tag "alley.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
           <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1' %>
           <%= ff.label :_destroy, "Bahn #{ff.object.alley.number}" %>
           <%= ff.hidden_field :alley_id %>
@@ -47,6 +47,7 @@
       <% end %>
     <% end %>
   </div>
+  <div class="clear"></div>
 
   <%= f.hidden_field :date %>
   <%= f.hidden_field :start_time %>

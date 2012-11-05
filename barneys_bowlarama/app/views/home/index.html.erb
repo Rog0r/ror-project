@@ -1,3 +1,7 @@
+<% flash.each do |name, msg| %>
+  <%= content_tag :p, msg, :id => "flash_#{name}" %>
+<% end %>
+
 <div id="bahnen">
   <p id="indexTermin"> 
   Sie haben eine bestimmte Zeit in aussicht und möchten prüfen ob Ihr Wunschtermin noch frei ist?

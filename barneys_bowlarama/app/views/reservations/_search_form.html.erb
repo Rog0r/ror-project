@@ -1,4 +1,4 @@
-<%= form_tag search_reservations_path, :remote => true do -%>
+<%= form_tag search_reservations_path, :remote => true, :id => "search_form" do -%>
   <p id="datumText1">Datum: <input type="text" id="datum1" /></p>
   <p id="zeitText1">Zw.: <input id="zeit1" type="text" name="search[from]"/> </p>
   <p id="zeitText2">und: <input id="zeit2" type="text" name="search[to]" /> </p>

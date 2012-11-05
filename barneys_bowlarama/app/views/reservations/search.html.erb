@@ -4,12 +4,10 @@
   <%= javascript_include_tag "reservations/jquery-ui-1.9.0.custom.min.js" %>
   <%= javascript_include_tag "reservations/search_form.js" %>
 <% end %>
-<div id="suchen">
 
   <%= render :partial => 'search_form', :locals => { :time => @time } %>
 
   <div id="results">
-  </div>
   </div>
 
 <%= render :partial => 'search_config', :locals => { :holiday_list => @holidays, :office_hour => @office_hour, :time => @time } %>

@@ -1,0 +1,23 @@
+<div id="menu">
+  <%= link_to "Home", root_path %>
+  | Termin:  
+  <%= link_to "wählen", new_reservation_path %>
+  /
+  <%= link_to "suchen", search_reservations_path %>
+  <% if can? :index, Reservation %>
+    | 
+    <%= link_to "Reservations", reservations_path %>
+  <% end %>
+  <% if can? :index, Alley %>
+    |
+    <%= link_to "Alleys", alleys_path %>
+  <% end %>
+  <% if can? :index, OfficeHour %>
+    | 
+    <%= link_to "Office Hours", office_hours_path %>
+  <% end %>
+  <% if can? :index, Holiday %>
+    | 
+    <%= link_to "Holidays", holidays_path %>
+  <% end %>
+</div>
