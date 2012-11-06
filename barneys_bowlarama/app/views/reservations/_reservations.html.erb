@@ -1,35 +1,48 @@
-<table class="belegung">
-  <caption>Für Sie passende Termine</caption>
-  <tr>
-    <td>Zeit: </td>
-    <% @alleys.each do |alley| %>
-      <td>Bahn <%= alley.number %></td>
-    <% end %>
-    <td></td>
-  </tr>
-</table>
 <% @reservations.each do |reservation| %>
-  <%= form_for(reservation) do |f| %>
-    <%= f.hidden_field :date %>
-    <%= f.hidden_field :start_time %>
-    <%= f.hidden_field :end_time %>
-    <table class="belegung">
-      <tr>
-        <td><%= "#{reservation.start_time.strftime("%H:%M")}-#{reservation.end_time.strftime("%H:%M")}" %></td>
-        <%= f.fields_for :alley_reservations do |ff| %>
-          <% if ff.object.occupied? %>
+  <div>
+    <%= form_for(reservation) do |f| %>
+      <%= f.hidden_field :date %>
+      <%= f.hidden_field :start_time %>
+      <%= f.hidden_field :end_time %>
+      <table>
+        <tr>
+          <td>Datum: </td>
+          <td><%= f.object.date.strftime "%d.%m.%Y" %></td>
+        </tr>
+        <tr>
+          <td>Von: </td>
+          <td><%= f.object.start_time.strftime "%H:%M" %></td>
+        </tr>
+        <tr>
+          <td>bis: </td>
+          <td><%= f.object.end_time.strftime "%H:%M" %></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <%= f.fields_for :alley_reservations do |ff| %>
             <td>
-              <%= check_box_tag "", "occupied alley", false, :disabled => true %>
-            </td>
-          <% else %>
-            <td>
-              <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1'  %>
-              <%= ff.hidden_field :alley_id %>
+              <%= "Bahn #{ff.object.alley.number}" %>
             </td>
           <% end %>
-        <% end %>
-        <td><%= f.submit "Reservieren" %></td>
-      <% end %>
-    </tr>
-  </table>
+        </tr>
+        <tr>
+          <%= f.fields_for :alley_reservations do |ff| %>
+            <% if ff.object.occupied? %>
+              <td>
+                <%= check_box_tag "", "occupied alley", false, :disabled => true %>
+              </td>
+            <% else %>
+              <td>
+                <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1'  %>
+                <%= ff.hidden_field :alley_id %>
+              </td>
+            <% end %>
+          <% end %>
+        </tr>
+      </table>
+      <%= f.submit "Reservieren" %>
+    <% end %>
+  </div>
 <% end %>

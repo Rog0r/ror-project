@@ -71,7 +71,7 @@
 
 
 #reservation_table table {
-  margin: 30px auto;
+  margin: 0 auto;
   width: 80%;
 }
 
@@ -88,4 +88,33 @@
 }
 
 
+#search_form {
+  margin-bottom: 20px;
+}
 
+
+#search_form table {
+  text-align: left;
+}
+
+
+#search_form table input {
+  width: 45px;
+}
+
+#search_form td:first-child {
+  width: 60px;
+}
+
+#search_form tr:first-child input {
+  width: 85px;
+}
+
+#search_results p {
+  text-align: center;
+  font-size:  18px;
+}
+
+#search_results table:last-child td {
+  text-align: right;
+}
