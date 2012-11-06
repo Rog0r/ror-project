@@ -3,11 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-#select_form {
-  margin-bottom: 20px;
-}
-
-
 #select_form table {
   text-align: left;
 }
@@ -25,11 +20,6 @@
 
 #select_form tr:first-child input {
   width: 85px;
-}
-
-
-#new_reservation {
-  margin-bottom: 20px;
 }
 
 
@@ -84,12 +74,7 @@
 
 
 #configs {
-  visibility: hidden;
-}
-
-
-#search_form {
-  margin-bottom: 20px;
+  display: none;
 }
 
 
@@ -102,12 +87,18 @@
   width: 45px;
 }
 
+
 #search_form td:first-child {
   width: 60px;
 }
 
+
 #search_form tr:first-child input {
   width: 85px;
+}
+
+#search_results {
+  text-align: center;
 }
 
 #search_results p {
@@ -115,6 +106,24 @@
   font-size:  18px;
 }
 
+#search_results > div {
+  margin-bottom: 15px;
+  padding: 0 20px;
+  border: solid #e7f0ec 1px;
+  display: inline-block;
+}
+
+#search_results table:last-child {
+  text-align: center;
+  border: solid #e7f0ec 1px;
+}
+
+
 #search_results table:last-child td {
-  text-align: right;
+  width: 60px;
+}
+
+
+.pin_red {
+  color: #fe192a;
 }

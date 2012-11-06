@@ -33,15 +33,15 @@
     <%= f.fields_for :alley_reservations do |ff| %>
       <% if ff.object.occupied? %>
         <%= content_tag :div, :class => "occupied" do -%>
-          <%= image_tag "alley_occupied.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
+          <%= image_tag "alley_occupied.png", :alt => "Grafik: Bahn #{ff.object.alley_number}" %>
           <%= check_box_tag "", "occupied alley", false, :disabled => true %>
-          <%= label_tag "", "Bahn #{ff.object.alley.number}:" %>
+          <%= label_tag "", "Bahn #{ff.object.alley_number}:" %>
         <% end -%>
       <% else %>
         <%= content_tag :div, :class => "free" do -%>
-          <%= image_tag "alley.png", :alt => "Grafik: Bahn #{ff.object.alley.number}" %>
+          <%= image_tag "alley.png", :alt => "Grafik: Bahn #{ff.object.alley_number}" %>
           <%= ff.check_box :_destroy, {:checked => ff.object.persisted?}, '0', '1' %>
-          <%= ff.label :_destroy, "Bahn #{ff.object.alley.number}" %>
+          <%= ff.label :_destroy, "Bahn #{ff.object.alley_number}" %>
           <%= ff.hidden_field :alley_id %>
         <% end -%>
       <% end %>

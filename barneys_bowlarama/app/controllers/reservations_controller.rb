@@ -227,9 +227,12 @@ class ReservationsController < ApplicationController
 
     alleys.each do |alley|
       unless occupation_list.include? alley.number.to_i
-        r.alley_reservations.build(:alley => alley)
+        alley_reservation = r.alley_reservations.build(:alley => alley)
+        alley_reservation.set_alley_number alley.number
       else
-        r.alley_reservations.build(:alley => alley).set_occupied
+        alley_reservation = r.alley_reservations.build(:alley => alley)
+        alley_reservation.set_alley_number alley.number
+        alley_reservation.set_occupied
       end
     end
     return r
@@ -266,9 +269,12 @@ class ReservationsController < ApplicationController
           r = Reservation.new(:date => date, :start_time => time_iterator, :end_time => time_iterator + duration)
           @alleys.each do |alley|
             unless occupation_list.include? alley.number.to_i
-              r.alley_reservations.build(:alley => alley)
+              alley_reservation = r.alley_reservations.build(:alley => alley)
+              alley_reservation.set_alley_number alley.number
             else
-              r.alley_reservations.build(:alley => alley).set_occupied
+              alley_reservation = r.alley_reservations.build(:alley => alley)
+              alley_reservation.set_occupied
+              alley_reservation.set_alley_number alley.number
             end
           end
           r.alley_reservations.sort_by! {|x| x.alley.id }

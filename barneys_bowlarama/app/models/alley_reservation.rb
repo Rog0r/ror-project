@@ -10,4 +10,12 @@ class AlleyReservation < ActiveRecord::Base
   def set_occupied
     @occupied = true
   end
+
+  def alley_number
+    @alley_number
+  end
+
+  def set_alley_number number=-1
+    @alley_number = number
+  end
 end
