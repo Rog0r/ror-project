@@ -8,7 +8,8 @@ requires jQuery 1.6+
 
 !(function($)
 {
-	var _baseDate = new Date(); _baseDate.setHours(0); _baseDate.setMinutes(0); _baseDate.setSeconds(0);
+
+	var _baseDate = _generateBaseDate();
 	var _ONE_DAY = 86400;
 	var _defaults =	{
 		className: null,
@@ -77,13 +78,12 @@ requires jQuery 1.6+
 
 				self.data('timepicker-settings', settings);
 				self.attr('autocomplete', 'off');
-				self.click(methods.show).focus(methods.show).blur(_formatValue).keydown(_keyhandler);
+				self.on('click.timepicker focus.timepicker', methods.show);
+				self.on('blur.timepicker', _formatValue);
+				self.on('keydown.timepicker', _keyhandler);
 				self.addClass('ui-timepicker-input');
 
-				if (self.val()) {
-					var prettyTime = _int2time(_time2int(self.val()), settings.timeFormat);
-					self.val(prettyTime);
-				}
+				_formatValue.call(self.get(0));
 
 				if (!globalInit) {
 					// close the dropdown when container loses focus
@@ -101,6 +101,11 @@ requires jQuery 1.6+
 		{
 			var self = $(this);
 			var list = self.data('timepicker-list');
+
+			// check if input is readonly
+			if (self.attr('readonly')) {
+				return;
+			}
 
 			// check if list needs to be rendered
 			if (!list || list.length == 0) {
@@ -165,7 +170,8 @@ requires jQuery 1.6+
 				var list = $(this);
 				var self = list.data('timepicker-input');
 				var settings = self.data('timepicker-settings');
-				if (settings.selectOnBlur) {
+
+				if (settings && settings.selectOnBlur) {
 					_selectValue(self);
 				}
 
@@ -226,8 +232,29 @@ requires jQuery 1.6+
 			var self = $(this);
 			var prettyTime = _int2time(_time2int(value), self.data('timepicker-settings').timeFormat);
 			self.val(prettyTime);
-		}
+		},
 
+		remove: function()
+		{
+			var self = $(this);
+
+			// check if this element is a timepicker
+			if (!self.hasClass('ui-timepicker-input')) {
+				return;
+			}
+
+			self.removeAttr('autocomplete', 'off');
+			self.removeClass('ui-timepicker-input');
+			self.removeData('timepicker-settings');
+			self.off('.timepicker');
+
+			// timepicker-list won't be present unless the user has interacted with this timepicker
+			if (self.data('timepicker-list')) {
+				self.data('timepicker-list').remove();
+			}
+
+			self.removeData('timepicker-list');
+		}
 	};
 
 	// private methods
@@ -299,6 +326,16 @@ requires jQuery 1.6+
 		});
 	};
 
+	function _generateBaseDate()
+	{
+		var _baseDate = new Date();
+		var _currentTimezoneOffset = _baseDate.getTimezoneOffset()*60000;
+		_baseDate.setHours(0); _baseDate.setMinutes(0); _baseDate.setSeconds(0);
+		var _baseDateTimezoneOffset = _baseDate.getTimezoneOffset()*60000;
+
+		return new Date(_baseDate.valueOf() - _baseDateTimezoneOffset + _currentTimezoneOffset);
+	}
+
 	function _findRow(self, list, value)
 	{
 		if (!value && value !== 0) {
@@ -338,7 +375,14 @@ requires jQuery 1.6+
 		}
 
 		var self = $(this);
-		var prettyTime = _int2time(_time2int(this.value), self.data('timepicker-settings').timeFormat);
+		var timeInt = _time2int(this.value);
+
+		if (timeInt === null) {
+			self.trigger('timeFormatError');
+			return;
+		}
+
+		var prettyTime = _int2time(timeInt, self.data('timepicker-settings').timeFormat);
 		self.val(prettyTime);
 	}
 
@@ -489,6 +533,10 @@ requires jQuery 1.6+
 
 	function _int2time(seconds, format)
 	{
+		if (seconds === null) {
+			return;
+		}
+
 		var time = new Date(_baseDate.valueOf() + (seconds*1000));
 		var output = '';
 
@@ -553,11 +601,11 @@ requires jQuery 1.6+
 		if (timeString+0 == timeString) return timeString;
 
 		if (typeof(timeString) == 'object') {
-			timeString = timeString.getHours()+':'+timeString.getMinutes();
+			timeString = timeString.getHours()+':'+timeString.getMinutes()+':'+timeString.getSeconds();
 		}
 
 		var d = new Date(0);
-		var time = timeString.toLowerCase().match(/(\d+)(?::(\d\d?))?\s*([pa]?)/);
+		var time = timeString.toLowerCase().match(/(\d{1,2})(?::(\d{2}))?(?::(\d{2}))?\s*([pa]?)/);
 
 		if (!time) {
 			return null;
@@ -565,11 +613,11 @@ requires jQuery 1.6+
 
 		var hour = parseInt(time[1]*1);
 
-		if (time[3]) {
+		if (time[4]) {
 			if (hour == 12) {
-				var hours = (time[3] == 'p') ? 12 : 0;
+				var hours = (time[4] == 'p') ? 12 : 0;
 			} else {
-				var hours = (hour + (time[3] == 'p' ? 12 : 0));
+				var hours = (hour + (time[4] == 'p' ? 12 : 0));
 			}
 
 		} else {
@@ -577,7 +625,8 @@ requires jQuery 1.6+
 		}
 
 		var minutes = ( time[2]*1 || 0 );
-		return hours*3600 + minutes*60;
+		var seconds = ( time[3]*1 || 0 );
+		return hours*3600 + minutes*60 + seconds;
 	};
 
 	// Plugin entry

@@ -1,11 +1,9 @@
 <div id="configs">
   <input id="openTime" type="text" value="<%= office_hour.open_from.strftime "%I:%M%P" %>" /> Mindest-Start-Zeit (z1min)
-  <input id="closeTime" type="text" value="<%= (office_hour.open_to - 1.hour).strftime "%I:%M%P" %>"/>
-  <input id="closeTime2" type="text" value="<%= office_hour.open_to.strftime "%I:%M%P" %>"/> Max-Start-Zeit. Geschlossen - 30Minuten (z1max)
+  <input id="closeTime" type="text" value="<%= office_hour.open_to.strftime "%I:%M%P" %>"/>
 
   <input id="start_time" type="text" value="<%= time.to_i %>"/> 
-  <input id="end_time" type="text" value="<%= (time + 1.hour).to_i %>"/>
-  
+
   <input id="maxPlayTime" type="text" value="06:00am" /> Maximale Spieldauer (06:00am ==> 6 Stunden spieldauer Maximal erlaubt)
   <input id="disableDays" type="text" value="<%= holiday_list %>" /> mm-dd-yyyy Also 10-16-2012 um den 16.10.2012 zu sperren
 </div>

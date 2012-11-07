@@ -50,6 +50,7 @@ class ReservationsController < ApplicationController
     if request.get?
       @alleys = Alley.all
       @office_hour = OfficeHour.by_date Date.today
+      @office_hour_list = create_office_hour_list
       @time = next_valid_time
       @reservations = Reservation.by_date(@time.to_date).includes(:alleys)
       @occupation_list = create_occupation_list @reservations, @time
@@ -217,8 +218,11 @@ class ReservationsController < ApplicationController
 
   def create_holiday_list 
     tmp_array = []
-    Holiday.coming(Date.today).each { |h| tmp_array << h.date.strftime("%m-%d-%Y") }
-    tmp_array.join(", ")
+    Holiday.coming(Date.today).each do |h| 
+      tmp_array << h.date.strftime("%e-%-m-%Y")
+      tmp_array << h.comment
+    end
+    tmp_array
   end
 
   def create_reservation_dummy(alleys, reservations, date, start_time, end_time)
@@ -285,4 +289,13 @@ class ReservationsController < ApplicationController
       reservations
     end
   end
+
+  def create_office_hour_list
+    office_hours = []
+    OfficeHour.all.each_with_index do |office_hour|
+      office_hours << [office_hour.open_from.strftime("%I:%M%P"), (office_hour.open_to - 1.hour).strftime("%I:%M%P"), office_hour.open_to.strftime("%I:%M%P")]
+    end
+    office_hours
+  end
+
 end
