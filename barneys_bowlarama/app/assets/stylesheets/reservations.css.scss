@@ -101,15 +101,23 @@
   text-align: center;
 }
 
+#search_results > div {
+  padding: 10px;
+  display: inline-block;
+  margin: 0 auto;
+  background-color: #dba731;
+  
+  -moz-border-radius:12px;
+	-webkit-border-radius:12px;
+	border-radius:12px;
+}
+
 #search_results p {
   text-align: center;
   font-size:  18px;
 }
 
-#search_results > div {
-  margin-bottom: 15px;
-  padding: 0 20px;
-  border: solid #e7f0ec 1px;
+#search_results ul {
   display: inline-block;
 }
 

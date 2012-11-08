@@ -1,0 +1,54 @@
+
+
+#sw_list{
+	/* The unordered list that is to be split into pages */
+
+	width:445px;
+	overflow:hidden;
+	position:relative;
+	padding-bottom:10px;
+	background-color: #82BDE4;
+}
+
+#sw_list,
+#sw_list li{
+	/* Applying rouded corners to both the holder and the holder lis */
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+}
+
+.swControls{
+	position:absolute;
+	margin-top:10px;
+}
+
+a.swShowPage{
+
+	/* The links that initiate the page slide */
+
+	background-color:#020302;
+	float:left;
+	height:15px;
+	margin:4px 3px;
+	text-indent:-9999px;
+	width:15px;
+	outline: none;
+	/*border:1px solid #ccc;*/
+	
+}
+
+a.swShowPage:hover,
+a.swShowPage.active{
+	background-color:#2993dd;
+	
+}
+
+#sw_list li{
+	background-color:#F4F4F4;
+	list-style:none outside none;
+	margin:10px 10px 0;
+	padding:20px;
+	float:left;
+	color: #020302;
+}
