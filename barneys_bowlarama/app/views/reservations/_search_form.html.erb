@@ -1,23 +1,23 @@
 <%= form_tag search_reservations_path, :remote => true, :id => "search_form" do -%>
-<table>
-<tr>
-<td>Datum: </td>
-<td><input type="text" id="datum1" /></td>  
-</tr>
-<tr>
-<td>Zwischen: </td>
-<td><input id="zeit1" type="text" name="search[from]"/></td>
-</tr>
-<tr>
-<td>und: </td>
-<td><input id="zeit2" type="text" name="search[to]" /></td>
-</tr>
-<tr>
-<td>Dauer: </td>
-<td><input id="zeit3" type="text" name="search[duration]"/></td>
-</tr>
-</table>
-<input id="date_field" type="hidden" value="<%= time.to_date %>" name="search[date]"/>
+  <table>
+    <tr>
+      <td>Datum: </td>
+      <td><input type="text" id="date" /></td>
+    </tr>
+    <tr>
+      <td>Zwischen: </td>
+      <td><input id="start_time" type="text" name="search[from]"/></td>
+    </tr>
+    <tr>
+      <td>und: </td>
+      <td><input id="end_time" type="text" name="search[to]" /></td>
+    </tr>
+    <tr>
+      <td>Dauer: </td>
+      <td><input id="duration" type="text" name="search[duration]"/></td>
+    </tr>
+  </table>
+  <input id="date_field" type="hidden" value="<%= time.to_date %>" name="search[date]"/>
 
-<%= submit_tag 'Finden' %>
+  <%= submit_tag 'Finden' %>
 <% end -%>

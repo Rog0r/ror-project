@@ -19,7 +19,7 @@
 
 <h2>Belegungsplan</h2>
 <%= render :partial => "reservation_table",:locals => {:date => @time, :reservation_table => @reservation_table } %>
-<%= render :partial => 'select_config', :locals => { :holiday_list => @holidays, :office_hour => @office_hour, :reservation => @reservation , :office_hour_list => @office_hour_list} %>
+<%= render :partial => 'select_config', :locals => { :holiday_list => @holidays, :reservation => @reservation , :office_hour_list => @office_hour_list} %>
 <%# link_to 'Back', reservations_path %>
 <%# debug @alleys%>
 <%# debug @office_hour %>

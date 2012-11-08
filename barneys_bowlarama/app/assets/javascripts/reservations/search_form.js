@@ -1,95 +1,164 @@
-jQuery(function($){
-  var date = new Date();
-  var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+var office_hour_list;
+var current_office_hour;
+var holidays;
 
-  var dayss = $('#disableDays').val();
-  var dA = dayss.split(", ");
+$(document).ready(function(){
 
-  var disabledDays = [dA[0]];
+  office_hour_list = eval($("#office_hour_list").val());
+  holidays = eval($("#holiday_list").val());
 
-  for (var i=1; i<dA.length; i++ ) {
-    disabledDays.push(dA[i]);
-  }
+  init_select_form();
 
-  var openFrom = $("#openTime").val();
-  var openTo = $("#closeTime").val();
-
-  var fromInit = $("#start_time").val();
-
-  var minTime = "01:00am";
-  var maxTime = $('#maxPlayTime').val();
-
-  function disableAllTheseDays(date) {
-    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
-    for (i = 0; i < disabledDays.length; i++) {
-      if($.inArray((m+1) + '-' + d + '-' + y,disabledDays) != -1) {
-        return [false];
-      }
-    }
-    return [true];
-  }
+});
 
 
-  $.datepicker.regional['de'] = {clearText: 'löschen', clearStatus: 'aktuelles Datum löschen',
-    closeText: 'schließen', closeStatus: 'ohne Änderungen schließen',
-    prevText: '&#x3c;zurück', prevStatus: 'letzten Monat zeigen',
-    nextText: 'Vor&#x3e;', nextStatus: 'nächsten Monat zeigen',
-    currentText: 'heute', currentStatus: '',
+function get_current_office_hour(date) {
+  return office_hour_list[date.getDay()];
+}
+
+
+function init_select_form() {
+
+  $.datepicker.regional['de'] = {
+    closeText: 'schließen',
+    prevText: '&#x3c;zurück',
+    nextText: 'Vor&#x3e;',
+    currentText: 'heute',
     monthNames: ['Januar','Februar','März','April','Mai','Juni',
     'Juli','August','September','Oktober','November','Dezember'],
     monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
     'Jul','Aug','Sep','Okt','Nov','Dez'],
-    monthStatus: 'anderen Monat anzeigen', yearStatus: 'anderes Jahr anzeigen',
-    weekHeader: 'Wo', weekStatus: 'Woche des Monats',
     dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
     dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
     dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
-    dayStatus: 'Setze DD als ersten Wochentag', dateStatus: 'Wähle D, M d',
-    dateFormat: 'dd.mm.yy', firstDay: 1,
-    initStatus: 'Wähle ein Datum', isRTL: false};
+    weekHeader: 'Wo',
+    dateFormat: 'dd.mm.yy',
+    firstDay: 1,
+    isRTL: false,
+    showMonthAfterYear: false,
+    yearSuffix: ''};
+
   $.datepicker.setDefaults($.datepicker.regional['de']);
 
-  $( "#datum1").datepicker({minDate: new Date(fromInit * 1000), beforeShowDay: disableAllTheseDays,onSelect: function(dateText, inst) { 
-    var dateAsString = dateText; //the first parameter of this function
-    var dateAsObject = $(this).datepicker( 'getDate' ); //the getDate method
-    $("#date_field").val(dateAsObject);
+  var start_time = new Date($("#current_start_time").val() * 1000 );
+  var start_time_2 = new Date($("#current_start_time").val() * 1000);
+  start_time_2.setHours(start_time_2.getHours() + 1);
+
+  current_office_hour = get_current_office_hour(start_time);
+
+  $("#date").datepicker( $.datepicker.regional[ "de" ] );
+  $("#date").datepicker( "option", "minDate", start_time);
+  $("#date").datepicker( "option", "onSelect", function(dateText, inst) { 
+    tmp = $(this).datepicker('getDate');
+    $("#date_field").val(tmp);
+    current_office_hour = get_current_office_hour(tmp);
+    update_timepicker_range();
+  });
+  $("#date").datepicker( "option", "beforeShowDay", is_available);
+
+  $('#start_time').timepicker({'timeFormat': 'H:i', 'minTime': start_time, 'maxTime': current_office_hour[1]});
+  $('#end_time').timepicker({'timeFormat': 'H:i', 'minTime': start_time_2, 'maxTime': current_office_hour[2]});
+
+  $("#date").datepicker('setDate', start_time);
+  $('#start_time').timepicker('setTime', start_time);
+  $('#end_time').timepicker('setTime', current_office_hour[2]);
+  $('#duration').timepicker({ 'timeFormat': 'H:i','minTime': '01:00am', 'maxTime': '06:00am'});
+  $('#duration').timepicker('setTime', '01:00am');
+
+  $('#start_time').bind('changeTime', update_timepicker);
+};
+
+
+function is_available(date) {
+  dmy = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
+  if ($.inArray(dmy, holidays) < 0) {
+    return [true,"","offen"];
+  } else {
+    return [false,"", holidays[$.inArray(dmy, holidays) + 1]];
   }
-  });
-
-  $("#datum1").datepicker('setDate', new Date(fromInit * 1000));
+}
 
 
+function update_timepicker_range() {
+  today = new Date();
+  today.setHours(0);
+  today.setMinutes(0);
+  today.setSeconds(0);
+  today.setMilliseconds(0);
 
-  $('#zeit1').timepicker({ 'timeFormat': 'H:i','minTime': openFrom, 'maxTime': openTo});
-  $('#zeit1').timepicker('setTime', new Date(fromInit * 1000));
-  $('#zeit2').timepicker({ 'timeFormat': 'H:i','minTime': openFrom, 'maxTime': openTo});
-  $('#zeit2').timepicker('setTime', openTo);
-  $('#zeit3').timepicker({ 'timeFormat': 'H:i','minTime': minTime, 'maxTime': maxTime});
-  $('#zeit3').timepicker('setTime', minTime);
+  if($("#date").datepicker('getDate') - today == 0) {
+    var start_time = new Date($("#current_start_time").val() * 1000 );
+    var start_time_2 = new Date($("#current_start_time").val() * 1000);
+    start_time_2.setHours(start_time_2.getHours() + 1);
+    $('#start_time').timepicker('option', {'minTime': start_time, 'maxTime': current_office_hour[1]});
+    $('#end_time').timepicker('option', {'minTime': start_time_2, 'maxTime': current_office_hour[2]});
+  } else {
+    $('#start_time').timepicker('option', {'minTime': current_office_hour[0], 'maxTime': current_office_hour[1]});
+    $('#end_time').timepicker('option', {'minTime': current_office_hour[0], 'maxTime': current_office_hour[2]});
+  }
 
-  $('#zeit1').change(function(){
+  $('#start_time').val('');
+  $('#end_time').val('');
+}
 
-    var z1 = $("#zeit1").val();
 
-    var z1Minute =":00";
-    if(z1.charAt(3)=="3") { 
-      z1Minute =":30";
+
+function update_timepicker() {
+
+  var start_time = $('#start_time').timepicker('getTime');
+  start_time.setHours(start_time.getHours() + 1);
+
+  if($('#end_time').is('[readonly]')) {
+    $('#end_time').timepicker({'timeFormat': 'H:i', 'minTime': start_time, 'maxTime': current_office_hour[2]});
+    $('#end_time').removeAttr('readonly');
+    $('#duration').timepicker({ 'timeFormat': 'H:i','minTime': '01:00am'});
+    $('#duration').removeAttr('readonly');
+  }
+
+  var end_time = $('#end_time').timepicker('getTime');
+
+  if(start_time >= end_time) {
+    $('#end_time').timepicker('setTime', current_office_hour[2]);
+
+    if(formatAMPM(start_time) == current_office_hour[2]) {
+      $('#end_time').timepicker('remove');
+      $('#end_time').attr('readonly', true);
+    } 
+
+  }
+
+  start_time = $('#start_time').timepicker('getTime');
+  duration = new Date (end_time - start_time);
+  duration.setHours(duration.getHours() - 1);
+  
+  if(duration.getHours() < 6) {
+
+    $('#duration').val('');
+
+    if(duration.getHours() == 1) {
+      $('#duration').timepicker('setTime', '01:00am');
+      $('#duration').timepicker('remove');
+      $('#duration').attr('readonly', true);
+    } else {
+      $('#duration').timepicker('option', 'maxTime', duration);
     }
-    if(z1.charAt(0) == '0' ){
-      z1Slice = z1.slice(1,2);
-    }
-    else {
-      z1Slice = z1.slice(0,2);
-    }
-  var z1Zahl = parseInt(z1Slice); 
-  z1Zahl = z1Zahl + 1;
-  z1Slice = z1Zahl.toString();
 
-  z2min = z1Slice + z1Minute;
+  } else {
+    $('#duration').timepicker('option', 'maxTime', '06:00am');
+  }
 
-  $('#zeit2').timepicker( 'option', 'minTime', z2min);
-  $('#zeit2').timepicker('setTime', z2min);
-  });
+};
 
-});
+
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  var hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  strTime = hours + ':' + minutes + ampm;
+  return strTime;
+}
+
 

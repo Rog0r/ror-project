@@ -18,6 +18,7 @@ class ReservationsController < ApplicationController
   def search
     if request.get?
       @office_hour = OfficeHour.by_date Date.today
+      @office_hour_list = create_office_hour_list
       @holidays = create_holiday_list
       @time = next_valid_time
     else
