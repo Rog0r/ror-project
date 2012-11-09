@@ -1,0 +1,28 @@
+<h1>Reservierung bestätigen</h1>
+
+<%= form_for(@reservation, :url => {:action => "create"}) do |f|%>
+  <div id="confirm_reservation" class="content_box">
+    <h2>Reservierungsdaten</h2>
+    <%= f.hidden_field :date %>
+    <%= f.hidden_field :start_time %>
+    <%= f.hidden_field :end_time %>
+    <%= f.fields_for :alley_reservations do |ff| %>
+      <%= ff.hidden_field :alley_id %>
+    <% end %>
+
+    <%= render :partial => "shared/reservation", :locals => {:reservation => f.object, :show_alleys => true} %>
+  </div>
+
+  <% unless user_signed_in? %>
+    <div id="user_login" class="content_box">
+      <h2>Bitte loggen Sie sich ein!</h2>
+      <p><%= text_field_tag "user[email]" %></p>
+      <p><%= password_field_tag "user[password]" %></p>
+    </div>
+  <% end %>
+
+  <div class="option_box content_box">
+    <%= f.submit "Reservieren" %>
+  </div>
+
+<% end %>

@@ -38,7 +38,7 @@ class Ability
       can :destroy, Reservation, :user_id => user.id
     end
 
-    can [:search, :new, :create], Reservation
+    can [:search, :new, :confirm, :create], Reservation
     can :index, Alley
     can :index, OfficeHour
     can :index, Holiday

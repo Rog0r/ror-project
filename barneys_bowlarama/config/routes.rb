@@ -12,6 +12,7 @@ BarneysBowlarama::Application.routes.draw do
   resources :reservations, :except => [:edit, :update] do
     collection do
       get 'search'
+      post 'confirm'
     end
   end
 

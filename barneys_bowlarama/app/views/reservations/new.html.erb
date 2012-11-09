@@ -4,6 +4,14 @@
   <%= javascript_include_tag "reservations/jquery-ui-1.9.1.custom.min.js" %>
   <%= javascript_include_tag "reservations/select_form.js" %>
 <% end %>
+<% flash.each do |name, msg| %>
+  <% if name == :alert %>
+    <div class="error_box">
+      <h2>Warnung!</h2>
+      <%= msg %>
+    </div>
+  <% end %>
+<% end %>
 
 <h1>Terminwahl</h1>
 
@@ -21,6 +29,6 @@
 
 <div class="centered">
   <h2>Belegungsplan</h2>
-  <%= render :partial => "reservation_table",:locals => {:date => @time, :reservation_table => @reservation_table } %>
+  <%= render :partial => "reservation_table",:locals => {:date => @reservation.date, :reservation_table => @reservation_table } %>
 </div>
 <%= render :partial => 'select_config', :locals => { :holiday_list => @holidays, :reservation => @reservation , :office_hour_list => @office_hour_list} %>

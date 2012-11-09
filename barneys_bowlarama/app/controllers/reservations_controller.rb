@@ -1,6 +1,8 @@
+# encoding: UTF-8
+
 class ReservationsController < ApplicationController
   load_and_authorize_resource
-  skip_load_resource :only => [:show, :new]
+  skip_load_resource :only => [:show, :new, :confirm]
 
   # GET /reservations
   # GET /reservations.json
@@ -85,26 +87,46 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def confirm
+    @reservation = Reservation.new(params[:reservation])
+    if @reservation.alley_reservations.empty?
+      # @alleys = Alley.all
+      # @office_hour = OfficeHour.by_date @reservation.date 
+      # @office_hour_list = create_office_hour_list
+      # @reservations = Reservation.by_date(@reservation.date).includes(:alleys)
+      # @occupation_list = create_occupation_list @reservations, @reservation.start_time, @reservation.end_time
+      # @reservation_table = create_reservation_table @alleys, @reservations, @office_hour.open_from, @office_hour.open_to
+      # @holidays = create_holiday_list
+      # @reservation = create_reservation_dummy @alleys, @reservations, @reservation.date, @reservation.start_time, @reservation.end_time
+
+      redirect_to new_reservation_path, :alert => "Bitte wählen Sie zunächst mindestens eine Bahn!"
+    else
+      alleys = Alley.all
+      @reservation.alley_reservations.each do |alley_reservation|
+        alley_reservation.set_alley_number alleys[alley_reservation.alley_id - 1].number
+      end
+
+    end
+  end
+
   # POST /reservations
   # POST /reservations.json
   def create
+    unless user_signed_in?
+      if(params.has_key?(:user) && params[:user].has_key?(:email) && !(params[:user][:email].blank?) \
+         && params[:user].has_key?(:password) && !(params[:user][:password].blank?))
+        user = User.find_by_email params[:user][:email]
+        user.valid_password? params[:user][:password]
+        sign_in user
+      end
+    end
+
     @reservation.user = current_user
     respond_to do |format|
       if @reservation.save
         format.html { redirect_to @reservation, notice: 'Reservation was successfully created.' }
-        format.json { render json: @reservation, status: :created, location: @reservation }
       else
-        @alleys = Alley.all
-        @office_hour = OfficeHour.by_date Date.today
-        @holidays = Holiday.coming Date.today
-        @time = next_valid_time
-        @reservations = Reservation.by_date(@time.to_date).includes(:alleys)
-        @occupation_list = create_occupation_list @reservations, @time
-        @reservation_table = create_reservation_table
-        @holiday_list = create_holiday_list
-
-        format.html { render action: "new" }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
+        format.html { render action: "confirm" }
       end
     end
   end

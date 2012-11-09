@@ -2,7 +2,7 @@
   <ul id="sw_list">
     <% @reservations.each do |reservation| %>
       <li>
-      <%= form_for(reservation) do |f| %>
+      <%= form_for(reservation, :url => {:action => 'confirm'}) do |f| %>
         <%= f.hidden_field :date %>
         <%= f.hidden_field :start_time %>
         <%= f.hidden_field :end_time %>
