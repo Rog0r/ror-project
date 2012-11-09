@@ -7,7 +7,13 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
-    @reservations = Reservation.includes(:alleys, :user).order(:date).all
+    if current_user.role == "user"
+      @reservations = current_user.reservations.includes(:alleys, :user).order(:date)
+    elsif current_user.role == "cashier"
+      @reservations = Reservation.includes(:alleys, :user).by_date Date.today
+    else
+      @reservations = Reservation.includes(:alleys, :user).order(:date).all
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -90,15 +96,6 @@ class ReservationsController < ApplicationController
   def confirm
     @reservation = Reservation.new(params[:reservation])
     if @reservation.alley_reservations.empty?
-      # @alleys = Alley.all
-      # @office_hour = OfficeHour.by_date @reservation.date 
-      # @office_hour_list = create_office_hour_list
-      # @reservations = Reservation.by_date(@reservation.date).includes(:alleys)
-      # @occupation_list = create_occupation_list @reservations, @reservation.start_time, @reservation.end_time
-      # @reservation_table = create_reservation_table @alleys, @reservations, @office_hour.open_from, @office_hour.open_to
-      # @holidays = create_holiday_list
-      # @reservation = create_reservation_dummy @alleys, @reservations, @reservation.date, @reservation.start_time, @reservation.end_time
-
       redirect_to new_reservation_path, :alert => "Bitte wählen Sie zunächst mindestens eine Bahn!"
     else
       alleys = Alley.all
@@ -106,27 +103,32 @@ class ReservationsController < ApplicationController
         alley_reservation.set_alley_number alleys[alley_reservation.alley_id - 1].number
       end
 
+      if user_signed_in? && current_user.role == "cashier"
+        @user = User.all.map { |u| [u.full_name, u.id] }
+      end
     end
   end
 
   # POST /reservations
   # POST /reservations.json
   def create
-    unless user_signed_in?
-      if(params.has_key?(:user) && params[:user].has_key?(:email) && !(params[:user][:email].blank?) \
-         && params[:user].has_key?(:password) && !(params[:user][:password].blank?))
-        user = User.find_by_email params[:user][:email]
+    if user_signed_in?
+      @reservation.user = User.find params[:user_id]
+    elsif(params.has_key?(:user) && params[:user].has_key?(:email) && !(params[:user][:email].blank?) \
+          && params[:user].has_key?(:password) && !(params[:user][:password].blank?))
+      user = User.find_by_email params[:user][:email]
+      if user
         user.valid_password? params[:user][:password]
         sign_in user
+        @reservation.user = current_user
       end
     end
 
-    @reservation.user = current_user
     respond_to do |format|
       if @reservation.save
         format.html { redirect_to @reservation, notice: 'Reservierung erfolgreich getätigt.' }
       else
-        format.html { render action: "confirm" }
+        format.html { redirect_to new_reservation_path, alert: 'Konnte Reservierung nicht anlegen: Falsche Login Daten.' }
       end
     end
   end

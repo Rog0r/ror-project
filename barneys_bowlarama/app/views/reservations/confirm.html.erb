@@ -1,3 +1,5 @@
+<%= render :partial => "shared/form_error", :locals => {:resource => @reservation} %>
+
 <h1>Reservierung bestätigen</h1>
 
 <%= form_for(@reservation, :url => {:action => "create"}) do |f|%>
@@ -13,11 +15,16 @@
     <%= render :partial => "shared/reservation", :locals => {:reservation => f.object, :show_alleys => true} %>
   </div>
 
-  <% unless user_signed_in? %>
+  <% if !(user_signed_in?) %>
     <div id="user_login" class="content_box">
       <h2>Bitte loggen Sie sich ein!</h2>
       <p><%= text_field_tag "user[email]" %></p>
       <p><%= password_field_tag "user[password]" %></p>
+    </div>
+  <% elsif current_user.role == "cashier" %>
+    <div id="user_login" class="content_box">
+      <h2>Bitte wählen Sie einen Nutzer!</h2>
+      <p><%= select_tag(:user_id, options_for_select(@user)) %></p>
     </div>
   <% end %>
 

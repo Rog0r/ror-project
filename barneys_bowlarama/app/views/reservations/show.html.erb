@@ -1,29 +1,32 @@
-<p id="notice"><%= notice %></p>
+<%= render "shared/notice" %>
+<h1>Reservierungsübersicht</h1>
 
-<p>
-<b>Date:</b>
-<%= @reservation.date.strftime "%d.%m.%Y" %>
-</p>
+<div>
+  <p>
+  <b>Date:</b>
+  <%= @reservation.date.strftime "%d.%m.%Y" %>
+  </p>
 
-<p>
-<b>Start time:</b>
-<%= @reservation.start_time.strftime "%H:%M"  %>
-</p>
+  <p>
+  <b>Start time:</b>
+  <%= @reservation.start_time.strftime "%H:%M"  %>
+  </p>
 
-<p>
-<b>End time:</b>
-<%= @reservation.end_time.strftime "%H:%M"%>
-</p>
+  <p>
+  <b>End time:</b>
+  <%= @reservation.end_time.strftime "%H:%M"%>
+  </p>
 
-<p>
-<b>User:</b>
-<%= @reservation.user.full_name %>
-</p>
-<ul>
-  <% @reservation.alleys.each do |alley| %>
-    <%= content_tag :li, "Bahn #{alley.number}" %>
-  <% end %>
-</ul>
-
-
-<%= link_to 'Back', reservations_path %>
+  <p>
+  <b>User:</b>
+  <%= @reservation.user.full_name %>
+  </p>
+  <ul>
+    <% @reservation.alleys.each do |alley| %>
+      <%= content_tag :li, "Bahn #{alley.number}" %>
+    <% end %>
+  </ul>
+</div>
+<div class="option_box">
+  <%= link_to 'Zurück', reservations_path %>
+</div>

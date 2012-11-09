@@ -1,0 +1,12 @@
+<% flash.each do |name, msg| %>
+  <% if name == :alert %>
+    <div class="error_box">
+      <h2>Warnung!</h2>
+      <%= msg %>
+    </div>
+  <% else %>
+    <div class="content_box">
+      <%= msg %>
+    </div>
+  <% end %>
+<% end %>
