@@ -29,12 +29,19 @@ class Ability
     if user.role == "admin"
       can :manage, :all
     elsif user.role == "cashier"
-      can :read, :all
+      can :index, Reservation
+      can :show, Reservation
+      can :destroy, Reservation
     elsif user.role == "user"
-      can :read, :all
-    else
-      can :manage, :all
+      can :index, Reservation
+      can :show, Reservation, :user_id => user.id
+      can :destroy, Reservation, :user_id => user.id
     end
+
+    can [:search, :new, :create], Reservation
+    can :index, Alley
+    can :index, OfficeHour
+    can :index, Holiday
 
   end
 end

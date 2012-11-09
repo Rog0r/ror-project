@@ -1,41 +1,54 @@
 <h1>Reservierungen</h1>
 
-<table>
-  <tr>
-    <th>Date</th>
-    <th>Start time</th>
-    <th>End time</th>
-    <th>User</th>
-    <th>Bahnen:</th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <% @reservations.each do |reservation| %>
+<div id="reservations">
+  <table>
     <tr>
-      <td>
-        <%= reservation.date.strftime "%d.%m.%Y" %>
-      </td>
-      <td>
-        <%= reservation.start_time.strftime "%H:%M"  %>
-      </td>
-      <td>
-        <%= reservation.end_time.strftime "%H:%M"%>
-      </td>
-      <td>
-        <%= reservation.user.full_name %>
-      </td>
-      <td>
-        <% reservation.alleys.sort.each do |alley| %>
-          <%= alley.number %>
-        <% end %>
-      </td>
-      <td><%= link_to 'Show', reservation %></td>
-      <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <th>Datum</th>
+      <th>Anfang</th>
+      <th>Ende</th>
+      <%= content_tag :th, "User" unless current_user.role == "user" %>
+      <th>Bahnen:</th>
+      <th></th>
+      <th></th>
     </tr>
-  <% end %>
-</table>
 
-<br />
-
-<%= link_to 'New Reservation', new_reservation_path %>
+    <% @reservations.each do |reservation| %>
+      <tr>
+        <td>
+          <%= reservation.date.strftime "%d.%m.%Y" %>
+        </td>
+        <td>
+          <%= reservation.start_time.strftime "%H:%M"  %>
+        </td>
+        <td>
+          <%= reservation.end_time.strftime "%H:%M"%>
+        </td>
+        <% unless current_user.role == "user" %>
+          <%= content_tag :td do -%>
+            <%= reservation.user.full_name %>
+          <% end -%>
+        <% end %>
+        <td>
+          <% reservation.alleys.sort.each do |alley| %>
+            <%= alley.number %>
+          <% end %>
+        </td>
+        <% if can? :show, reservation %>
+          <%= content_tag :td do -%>
+            <%= link_to 'Details', reservation %>
+          <% end -%>
+        <% end %>
+        <% if can? :destroy, reservation %>
+          <%= content_tag :td do -%>
+            <%= link_to 'löschen', reservation, method: :delete, data: { confirm: 'Sind Sie sich sicher?' } %>
+          <% end -%>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<% if can? :new, Reservation %>
+  <div class="option_box">
+    <%= link_to 'Reservierung erstellen', new_reservation_path %>
+  </div>
+<% end %>

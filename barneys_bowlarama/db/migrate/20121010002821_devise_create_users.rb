@@ -74,5 +74,16 @@ class DeviseCreateUsers < ActiveRecord::Migration
       u.last_name = "Sorglos"
       u.phone = "12345678"
     end
+
+    User.create do |u|
+      u.email = "user@bowlarama.com"
+      u.password = "testuser"
+      u.password_confirmation = "testuser"
+      u.role = "user"
+      u.first_name = "Tom"
+      u.last_name = "Tester"
+      u.phone = "123456789"
+    end
+
   end
 end

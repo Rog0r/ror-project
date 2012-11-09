@@ -1,16 +1,16 @@
 <div id="menu" class="content_box">
   <%= link_to "Home", root_path %>
-  | Termin:  
+  | Termin: 
   <%= link_to "wählen", new_reservation_path %>
   /
   <%= link_to "suchen", search_reservations_path %>
   <% if can? :index, Reservation %>
     | 
-    <%= link_to "Reservations", reservations_path %>
+    <%= link_to "Reservierungen", reservations_path %>
   <% end %>
   <% if can? :index, Alley %>
     |
-    <%= link_to "Alleys", alleys_path %>
+    <%= link_to "Bahnen", alleys_path %>
   <% end %>
   <% if can? :index, OfficeHour %>
     | 
