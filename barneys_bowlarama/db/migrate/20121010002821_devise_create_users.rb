@@ -56,7 +56,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
     # add_index :users, :authentication_token, :unique => true
  
     User.create do |u|
-      u.email = "admin1@bowlarama.com"
+      u.email = "admin1@lv_bowling.com"
       u.password = "admin1"
       u.password_confirmation = "admin1"
       u.role = "admin"
@@ -66,7 +66,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
     end
 
     User.create do |u|
-      u.email = "cashier@bowlarama.com"
+      u.email = "cashier@lv_bowling.com"
       u.password = "cashier"
       u.password_confirmation = "cashier"
       u.role = "cashier"
@@ -76,7 +76,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
     end
 
     User.create do |u|
-      u.email = "user@bowlarama.com"
+      u.email = "user@lv_bowling.com"
       u.password = "testuser"
       u.password_confirmation = "testuser"
       u.role = "user"
