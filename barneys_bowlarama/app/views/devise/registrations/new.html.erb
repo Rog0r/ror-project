@@ -1,25 +1,28 @@
-<h2>Sign up</h2>
+<h1>Registrierung</h1>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<div>
+  <h2>Geben Sie Ihre Daten ein!</h2>
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+    <p><%= f.label :email %><br />
+    <%= f.email_field :email %></p>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <p><%= f.label :password %><br />
+    <%= f.password_field :password %></p>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.text_field :password_confirmation %></div>
+    <p><%= f.label :password_confirmation %><br />
+    <%= f.text_field :password_confirmation %></p>
 
-  <div><%= f.label :first_name %><br />
-  <%= f.text_field :first_name  %></div>
+    <p><%= f.label :first_name %><br />
+    <%= f.text_field :first_name  %></p>
 
-  <div><%= f.label :last_name  %><br />
-  <%= f.text_field :last_name %></div>
+    <p><%= f.label :last_name  %><br />
+    <%= f.text_field :last_name %></p>
 
-  <div><%= f.label :phone %><br />
-  <%= f.text_field :phone %></div>
+    <p><%= f.label :phone %><br />
+    <%= f.text_field :phone %></p>
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
+    <%= f.submit "Registrieren" %>
+  <% end %>
+</div>

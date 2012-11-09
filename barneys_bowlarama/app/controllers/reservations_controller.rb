@@ -124,7 +124,7 @@ class ReservationsController < ApplicationController
     @reservation.user = current_user
     respond_to do |format|
       if @reservation.save
-        format.html { redirect_to @reservation, notice: 'Reservation was successfully created.' }
+        format.html { redirect_to @reservation, notice: 'Reservierung erfolgreich getätigt.' }
       else
         format.html { render action: "confirm" }
       end
