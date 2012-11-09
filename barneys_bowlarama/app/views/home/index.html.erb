@@ -1,5 +1,14 @@
 <% flash.each do |name, msg| %>
-  <%= content_tag :p, msg, :id => "flash_#{name}" %>
+  <% if name == :alert %>
+    <div class="error_box">
+      <h2>Warnung!</h2>
+      <%= msg %>
+    </div>
+  <% else %>
+    <div class="content_box">
+      <%= msg %>
+    </div>
+  <% end %>
 <% end %>
 <h1>Online Reservierung</h1>
 <div>
