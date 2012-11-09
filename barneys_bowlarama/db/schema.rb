@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(:version => 20121016235947) do
 
   create_table "alleys", :force => true do |t|
     t.integer  "number"
-    t.boolean  "unlocked"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

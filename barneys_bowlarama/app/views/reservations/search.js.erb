@@ -1,5 +1,5 @@
 $('#search_results').html("<%= escape_javascript(render "reservation_list") %>");
-$('#sw_list').sweetPages({perPage:3});
+$('#sw_list').sweetPages({perPage:2});
 
 var controls = $('.swControls').detach();
 controls.appendTo('#search_results');

@@ -1,5 +1,3 @@
-<h1>New alley</h1>
+# encoding: UTF-8
 
-<%= render 'form' %>
-
-<%= link_to 'Back', alleys_path %>
+<%= render :partial => "shared/form", :locals => {:heading => "Bahn anlegen", :resource => @alley, :description => "Neue Bahn", :form => "form", :submit_title => "Bahn anlegen", :resource_path => alleys_path} %>

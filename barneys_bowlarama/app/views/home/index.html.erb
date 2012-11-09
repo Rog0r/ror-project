@@ -1,15 +1,25 @@
 <% flash.each do |name, msg| %>
   <%= content_tag :p, msg, :id => "flash_#{name}" %>
 <% end %>
-
-<div id="bahnen">
-  <p id="indexTermin"> 
-  Sie haben eine bestimmte Zeit in aussicht und möchten prüfen ob Ihr Wunschtermin noch frei ist?
-  <%= link_to "Termin wählen -->", new_reservation_path %>  
+<h1>Online Reservierung</h1>
+<div>
+  <h2>Willkommen!</h2>
+  <p>
+  Willkommen bei dem Online Reservierungsservice der Love Vegas Bowlingbahn!
   </p>
-
-  <p id="indexSuche"> 
-  ... oder möchten Sie sich Termine für einen gewählten Zeitraum vorschlagen lassen? 
-  <%= link_to "Termin suchen -->", search_reservations_path %>  
-  </p> 
+  <p>
+  Hier haben Sie die Möglichkeit einen Wunschtermin zu prüfen und zu reservieren:
+  <br/>
+  <%= link_to "Zur Wunschtermin-Reservierung", new_reservation_path %>
+  </p>
+  <p>
+  Hier wählen Sie aus einer Liste möglicher Termine:
+  <br/>
+  <%= link_to "Termin wählen", search_reservations_path %>
+  </p>
+  <p>
+  Registrieren Sie sich und nutzen Sie alle Vorteile! Infos und Formular:
+  <br/>
+  <%= link_to "Registrieren", new_user_registration_path%>
+  </p>
 </div>

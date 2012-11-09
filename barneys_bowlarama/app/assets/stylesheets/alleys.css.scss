@@ -1,3 +1,25 @@
 // Place all the styles related to the Alleys controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#alleys table{
+  margin: 0 auto;
+}
+
+#alleys td:first-child {
+  width: 30px;
+  border: solid #e7f0ec 1px;
+}
+
+#alleys td {
+  width: 120px;
+  border: solid #e7f0ec 1px;
+}
+
+.new_alley p > input {
+  width: 50px;
+}
+
+.edit_alley p > input {
+  width: 50px;
+}

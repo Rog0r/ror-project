@@ -5,16 +5,18 @@
   <%= javascript_include_tag "reservations/search_form.js" %>
   <%= javascript_include_tag "reservations/sweet_pages.js" %>
 <% end %>
-<h1>Online-Reservierung</h1>
+<h1>Terminsuche</h1>
 
-<h2>Tag und Zeitraum wählen!</h2>
 <div>
-<%= render :partial => 'search_form', :locals => { :time => @time } %>
+  <h2>Tag und Zeitraum wählen!</h2>
+  <%= render :partial => 'search_form', :locals => { :time => @time } %>
 </div>
 
-<h2>Reservierungen</h2>
-<div id="search_results">
-<p>Finden Sie Reservierungstermine über unser Formular!</p>
+<div>
+  <h2>Reservierungen</h2>
+  <div id="search_results">
+    Finden Sie Reservierungstermine über unser Formular!
+  </div>
 </div>
 
 <%= render :partial => 'search_config', :locals => { :holiday_list => @holidays, :time => @time, :office_hour_list => @office_hour_list} %>

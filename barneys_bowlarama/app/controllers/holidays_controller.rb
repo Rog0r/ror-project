@@ -13,15 +13,6 @@ class HolidaysController < ApplicationController
     end
   end
 
-  # GET /holidays/1
-  # GET /holidays/1.json
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @holiday }
-    end
-  end
-
   # GET /holidays/new
   # GET /holidays/new.json
   def new

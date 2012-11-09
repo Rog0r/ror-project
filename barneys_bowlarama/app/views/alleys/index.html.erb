@@ -1,25 +1,32 @@
-<h1>Listing alleys</h1>
+<h1>Bahnen</h1>
 
-<table>
-  <tr>
-    <th>Number</th>
-    <th>Unlocked</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div id="alleys">
+  <table>
+    <tr>
+      <th>Nummer</th>
+      <%= content_tag :th if can? :edit, Alley %>
+      <%= content_tag :th if can? :destroy, Alley %>
+    </tr>
 
-<% @alleys.each do |alley| %>
-  <tr>
-    <td><%= alley.number %></td>
-    <td><%= alley.unlocked %></td>
-    <td><%= link_to 'Show', alley %></td>
-    <td><%= link_to 'Edit', edit_alley_path(alley) %></td>
-    <td><%= link_to 'Destroy', alley, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+    <% @alleys.each do |alley| %>
+      <tr>
+        <td><%= alley.number %></td>
+        <% if can? :edit, Alley %>
+          <%= content_tag :td do -%>
+            <%= link_to 'bearbeiten', edit_alley_path(alley) %>
+          <% end -%>
+        <% end %>
+        <% if can? :destroy, Alley %>
+          <%= content_tag :td do -%>
+            <%= link_to 'löschen', alley, method: :delete, data: { confirm: 'Sind Sie sich sicher?' } %>
+          <% end -%>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<% if can? :new, Holiday %>
+  <div class="option_box">
+    <%= link_to 'Bahn anlegen', new_alley_path %>
+  </div>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Alley', new_alley_path %>

@@ -7,9 +7,9 @@ BarneysBowlarama::Application.routes.draw do
 
   #get "home/index"
 
-  resources :office_hours
+  resources :office_hours, :only => [:index, :edit, :update]
 
-  resources :reservations do
+  resources :reservations, :except => [:edit, :update] do
     collection do
       get 'search'
     end
@@ -18,9 +18,9 @@ BarneysBowlarama::Application.routes.draw do
   match 'reservations/search' => 'reservations#search', :via => :post
   match 'reservations/new' => 'reservations#new', :via => :post
 
-  resources :holidays
+  resources :holidays, :except => :show
 
-  resources :alleys
+  resources :alleys, :except => :show
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

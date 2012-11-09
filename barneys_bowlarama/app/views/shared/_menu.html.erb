@@ -1,4 +1,4 @@
-<div id="menu">
+<div id="menu" class="content_box">
   <%= link_to "Home", root_path %>
   | Termin:  
   <%= link_to "wählen", new_reservation_path %>
@@ -14,10 +14,10 @@
   <% end %>
   <% if can? :index, OfficeHour %>
     | 
-    <%= link_to "Office Hours", office_hours_path %>
+    <%= link_to "Öffnungszeiten", office_hours_path %>
   <% end %>
   <% if can? :index, Holiday %>
     | 
-    <%= link_to "Holidays", holidays_path %>
+    <%= link_to "Feiertage", holidays_path %>
   <% end %>
 </div>

@@ -1,3 +1,17 @@
 // Place all the styles related to the Holidays controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#holidays table{
+  margin: 0 auto;
+}
+
+#holidays td{
+  width: 100px;
+  border: solid #e7f0ec 1px;
+}
+
+#holidays td:nth-child(2) {
+  width: 250px;
+  border: solid #e7f0ec 1px;
+}

@@ -1,3 +1,12 @@
 // Place all the styles related to the OfficeHours controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#office_hours table{
+  margin: 0 auto;
+}
+
+#office_hours td{
+  width: 120px;
+  border: solid #e7f0ec 1px;
+}

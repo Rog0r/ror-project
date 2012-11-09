@@ -5,28 +5,22 @@
   <%= javascript_include_tag "reservations/select_form.js" %>
 <% end %>
 
-<h1>Online-Reservierung</h1>
+<h1>Terminwahl</h1>
 
-<h2>Tag und Zeitraum wählen!</h2>
 <div id="select_form">
-<%= render 'select_form' %>
+  <h2>Tag und Zeitraum wählen!</h2>
+  <%= render 'select_form' %>
 </div>
 
-<h2>Ihre Reservierung!</h2>
-<div id="reservation_form">
-  <%= render 'new_form' %>
+<div>
+  <h2>Reservierungdaten</h2>
+  <div id="reservation_form">
+    <%= render 'new_form' %>
+  </div>
 </div>
 
-<h2>Belegungsplan</h2>
-<%= render :partial => "reservation_table",:locals => {:date => @time, :reservation_table => @reservation_table } %>
+<div class="centered">
+  <h2>Belegungsplan</h2>
+  <%= render :partial => "reservation_table",:locals => {:date => @time, :reservation_table => @reservation_table } %>
+</div>
 <%= render :partial => 'select_config', :locals => { :holiday_list => @holidays, :reservation => @reservation , :office_hour_list => @office_hour_list} %>
-<%# link_to 'Back', reservations_path %>
-<%# debug @alleys%>
-<%# debug @office_hour %>
-<%# debug @holidays%>
-<%# debug @time%>
-<%# debug @reservations%>
-<%# debug @occupation_list %>
-<%# debug @reservation_table %>
-<%# debug @holiday_list%>
-<%# debug @reservation %>

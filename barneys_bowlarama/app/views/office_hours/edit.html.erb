@@ -1,6 +1,3 @@
-<h1>Editing office_hour</h1>
+# encoding: UTF-8
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @office_hour %> |
-<%= link_to 'Back', office_hours_path %>
+<%= render :partial => "shared/form", :locals => {:heading => "Öffnungszeit bearbeiten", :resource => @office_hour, :description => "\"#{@office_hour.day}\" ändern", :form => "form", :submit_title => "Änderung speichern", :resource_path => office_hours_path} %>

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class OfficeHoursController < ApplicationController
   load_and_authorize_resource
 
@@ -7,15 +9,6 @@ class OfficeHoursController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @office_hours }
-    end
-  end
-
-  # GET /office_hours/1
-  # GET /office_hours/1.json
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @office_hour }
     end
   end
 
@@ -30,11 +23,9 @@ class OfficeHoursController < ApplicationController
 
     respond_to do |format|
       if @office_hour.update_attributes(params[:office_hour])
-        format.html { redirect_to @office_hour, notice: 'Office hour was successfully updated.' }
-        format.json { head :no_content }
+        format.html { redirect_to action: "index", notice: 'Offnungszeit erfolgreich geändert.' }
       else
         format.html { render action: "edit" }
-        format.json { render json: @office_hour.errors, status: :unprocessable_entity }
       end
     end
   end

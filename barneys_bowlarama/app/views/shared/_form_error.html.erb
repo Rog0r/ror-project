@@ -1,0 +1,10 @@
+<% if resource.errors.any? %>
+  <div class="error_box">
+    <h2>Fehler!</h2>
+    <ul>
+      <% resource.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

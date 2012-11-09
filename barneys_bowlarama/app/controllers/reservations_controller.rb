@@ -85,18 +85,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # GET /reservations/1/edit
-  def edit
-    @alleys = Alley.all
-    @office_hour = OfficeHour.by_date Date.today
-    @holidays = Holiday.coming Date.today
-    @time = next_valid_time
-    @reservations = Reservation.by_date(@time.to_date).includes(:alleys)
-    @occupation_list = create_occupation_list @reservations, @time
-    @reservation_table = create_reservation_table
-    @holiday_list = create_holiday_list
-  end
-
   # POST /reservations
   # POST /reservations.json
   def create
@@ -121,28 +109,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # PUT /reservations/1
-  # PUT /reservations/1.json
-  def update
-    respond_to do |format|
-      if @reservation.update_attributes(params[:reservation])
-        format.html { redirect_to @reservation, notice: 'Reservation was successfully updated.' }
-        format.json { head :no_content }
-      else
-        @alleys = Alley.all
-        @office_hour = OfficeHour.by_date Date.today
-        @holidays = Holiday.coming Date.today
-        @time = next_valid_time
-        @reservations = Reservation.by_date(@time.to_date).includes(:alleys)
-        @occupation_list = create_occupation_list @reservations, @time
-        @reservation_table = create_reservation_table
-        @holiday_list = create_holiday_list
-
-        format.html { render action: "edit" }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # DELETE /reservations/1
   # DELETE /reservations/1.json

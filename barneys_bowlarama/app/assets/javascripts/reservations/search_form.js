@@ -135,7 +135,7 @@ function update_timepicker() {
 
     $('#duration').val('');
 
-    if(duration.getHours() == 1) {
+    if(duration.getHours() == 1 && duration.getMinutes() == 0) {
       $('#duration').timepicker('setTime', '01:00am');
       $('#duration').timepicker('remove');
       $('#duration').attr('readonly', true);

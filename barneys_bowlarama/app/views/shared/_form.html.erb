@@ -1,0 +1,11 @@
+<h1><%= heading %></h1>
+
+<%= render :partial => "shared/form_error", :locals => {:resource => resource} %>
+
+<div>
+  <h2><%= description %></h2>
+  <%= render :partial => form, :locals => {:submit_title => submit_title} %>
+</div>
+<div class="option_box">
+  <%= link_to 'Zurück', resource_path %>
+</div>

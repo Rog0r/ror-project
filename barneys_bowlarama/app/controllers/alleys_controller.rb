@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class AlleysController < ApplicationController
   load_and_authorize_resource
   # GET /alleys
@@ -8,15 +10,6 @@ class AlleysController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @alleys }
-    end
-  end
-
-  # GET /alleys/1
-  # GET /alleys/1.json
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @alley }
     end
   end
 
@@ -38,11 +31,9 @@ class AlleysController < ApplicationController
   def create
     respond_to do |format|
       if @alley.save
-        format.html { redirect_to @alley, notice: 'Alley was successfully created.' }
-        format.json { render json: @alley, status: :created, location: @alley }
+        format.html { redirect_to @alley, notice: 'Bahn erfolgreich angelegt.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @alley.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -52,11 +43,10 @@ class AlleysController < ApplicationController
   def update
     respond_to do |format|
       if @alley.update_attributes(params[:alley])
-        format.html { redirect_to @alley, notice: 'Alley was successfully updated.' }
+        format.html { redirect_to @alley, notice: 'Bahn erfolgreich geändert.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @alley.errors, status: :unprocessable_entity }
       end
     end
   end

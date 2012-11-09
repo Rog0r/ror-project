@@ -1,25 +1,13 @@
 <%= form_for(@holiday) do |f| %>
-  <% if @holiday.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@holiday.errors.count, "error") %> prohibited this holiday from being saved:</h2>
-
-      <ul>
-      <% @holiday.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :date %><br />
-    <%= f.date_select :date %>
-  </div>
-  <div class="field">
-    <%= f.label :comment %><br />
-    <%= f.text_field :comment %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <p>
+  <%= f.label :date, "Datum" %><br />
+  <%= f.date_select :date %>
+  </p>
+  <p>
+  <%= f.label :comment, "Beschreibung" %><br />
+  <%= f.text_field :comment %>
+  </p>
+  <p>
+  <%= f.submit submit_title %>
+  </p>
 <% end %>
